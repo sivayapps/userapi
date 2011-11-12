@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.boshanam</groupId>
+	<artifactId>user</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>UserManager</name>
+	<description>Maintaining Administering Users</description>
+	<modules>
+		<module>user-core</module>
+		<module>user-ui-core</module>
+		<module>user-ui</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<id>sivayapps</id>
+			<name>Sivakumar Y</name>
+			<email>sivayapps@gmail.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:svn:https://timextrack.googlecode.com/svn/trunk/timextrack</connection>
+		<developerConnection>scm:svn:https://timextrack.googlecode.com/svn/trunk/timextrack</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://code.google.com/p/timextrack/source/browse/</url>
+	</scm>
+
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/timextrack/issues</url>
+	</issueManagement>
+
+	<properties>
+
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<jackson-mapper-asl.version>1.9.1</jackson-mapper-asl.version>
+
+		<!-- GWT needs at least java 1.5 -->
+		<maven.compiler.source>1.5</maven.compiler.source>
+		<maven.compiler.target>1.5</maven.compiler.target>
+
+		<!-- Plugin properties -->
+		<maven-source-plugin.version>2.1.2</maven-source-plugin.version>
+		<maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+
+		<!-- Other configuration -->
+		<!-- PRETTY style during development, <profiles> used to configure other 
+			styles -->
+		<gwt.style>PRETTY</gwt.style>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>gwt-maven-plugin</artifactId>
+					<version>${gwt-maven-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<repositories>
+		<repository>
+			<id>smartclient</id>
+			<name>smartclient.com</name>
+			<url>http://www.smartclient.com/maven2</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<!-- Spring 3 dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson-mapper-asl.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+
+		</dependencies>
+	</dependencyManagement>
+
+</project>
