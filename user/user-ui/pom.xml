@@ -11,6 +11,7 @@
 	<artifactId>user-ui</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+
 	<name>UserUi</name>
 	<description>User Ui module</description>
 
@@ -23,45 +24,41 @@
 	</repositories>
 
 	<properties>
-		<!-- Convenience property to set the GWT version -->
-		<gwt.version>2.4.0</gwt.version>
-		<smartgwt.version>2.4</smartgwt.version>
 
-		<!-- GWT needs at least java 1.5 -->
-		<maven.compiler.source>1.5</maven.compiler.source>
-		<maven.compiler.target>1.5</maven.compiler.target>
+		<user-ui-core.version>${project.version}</user-ui-core.version>
+		<user-core.version>${project.version}</user-core.version>
+
+		<gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
+		<maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+
 		<webappDirectory>${project.build.directory}/${project.build.finalName}
 		</webappDirectory>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.boshanam</groupId>
+			<artifactId>user-ui-core</artifactId>
+			<version>${user-ui-core.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt</artifactId>
-			<version>${smartgwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt-skins</artifactId>
-			<version>${smartgwt.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -76,7 +73,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.4.0</version>
+				<version>${gwt-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -92,7 +89,7 @@
 				<configuration>
 					<runTarget>UserUi.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<i18nMessagesBundle>com.boshanam.user.ui.core.gwt.client.Messages
+					<i18nMessagesBundle>com.boshanam.user.ui.gwt.client.Messages
 					</i18nMessagesBundle>
 				</configuration>
 			</plugin>
@@ -101,7 +98,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>${maven-war-plugin.version}</version>
 				<executions>
 					<execution>
 						<phase>compile</phase>

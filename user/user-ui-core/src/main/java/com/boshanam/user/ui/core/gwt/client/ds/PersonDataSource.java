@@ -43,6 +43,8 @@ public class PersonDataSource extends AbstractRestDataSource {
 	    
 	    //TODO remove
 	    headers.put ("myheader", "foo");
+	    headers.put ("Pragma", "no-cache");
+	    headers.put ("Cache-Control", "no-cache, no-store, must-revalidate");
 			
 	    final DSRequest request = new DSRequest ();
 	    request.setHttpHeaders (headers);
@@ -51,12 +53,10 @@ public class PersonDataSource extends AbstractRestDataSource {
 	    
 		setJsonRecordXPath("/");
 
-		DataSourceField idField = new DataSourceField("id", FieldType.INTEGER,
-				"ID");
+		DataSourceField idField = new DataSourceField("id", FieldType.INTEGER, "ID");
 		idField.setPrimaryKey(true);
 		idField.setCanEdit(false);
-		DataSourceField nameField = new DataSourceField("name", FieldType.TEXT,
-				"Name");
+		DataSourceField nameField = new DataSourceField("name", FieldType.TEXT,	"Name");
 
 		setFields(idField, nameField);
 	}

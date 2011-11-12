@@ -13,6 +13,7 @@
 	<artifactId>user-ui-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+
 	<name>UserUiCore</name>
 	<description>User Ui related developments developed as independent way
 		to allow this module to be plugged and reused in any other projects.
@@ -20,9 +21,7 @@
 
 	<properties>
 
-		<!-- Plugin properties -->
-		<gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
-
+		<gwt-source-base-path>**/gwt/**/*.java</gwt-source-base-path>
 		<!-- Other configuration -->
 		<!-- PRETTY style during development, <profiles> used to configure other 
 			styles -->
@@ -30,6 +29,23 @@
 	</properties>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>${gwt-source-base-path}</include>
+					<include>**/*.properties</include>
+					<include>**/*.gwt.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+
 		<plugins>
 
 		</plugins>
@@ -41,7 +57,29 @@
 	</repositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.boshanam</groupId>
+			<artifactId>user-core</artifactId>
+			<version>${user-core.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt-skins</artifactId>
+		</dependency>
 
 	</dependencies>
 

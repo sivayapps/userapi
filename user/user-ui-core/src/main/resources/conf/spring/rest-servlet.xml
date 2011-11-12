@@ -21,7 +21,7 @@
 	<resources mapping="/SmartGWTIntroProject.*" location="/" /> -->
 
 	<!-- <annotation-driven /> -->
-	<context:component-scan base-package="com.boshanam.controllers" />
+	<context:component-scan base-package="com.boshanam.user.ui.core.controllers.rest" />
 
 	<!-- <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" 
 		p:definitions="/WEB-INF/tiles-defs.xml" /> -->
