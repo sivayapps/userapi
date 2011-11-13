@@ -43,7 +43,7 @@
 
 		<!-- Convenience property to set the GWT version -->
 		<gwt.version>2.4.0</gwt.version>
-		<smartgwt.version>2.4</smartgwt.version>
+		<smartgwt.version>2.5</smartgwt.version>
 
 		<!-- GWT needs at least java 1.5 -->
 		<maven.compiler.source>1.5</maven.compiler.source>
