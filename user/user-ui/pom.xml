@@ -15,24 +15,169 @@
 	<name>UserUi</name>
 	<description>User Ui module</description>
 
+	<profiles>
+		<profile>
+			<id>classic</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<!-- GWT Maven Plugin -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>gwt-maven-plugin</artifactId>
+						<version>${gwt-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>compile</goal>
+									<goal>test</goal>
+									<goal>i18n</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<logLevel>INFO</logLevel>
+							<gwt.style>${gwt.style}</gwt.style>
+							<hostedWebapp>${webapp.directory}</hostedWebapp>
+							<copyWebapp>true</copyWebapp>
+							<runTarget>UserUi.html</runTarget>
+							<hostedWebapp>${webappDirectory}</hostedWebapp>
+							<i18nMessagesBundle>com.boshanam.user.ui.gwt.client.Messages
+							</i18nMessagesBundle>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>com.boshanam</groupId>
+					<artifactId>user-core-classic-impl</artifactId>
+					<version>${user-core-classic-impl.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>google</id>
+			<build>
+				<plugins>
+					<!-- GWT Maven Plugin -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>gwt-maven-plugin</artifactId>
+						<version>${gwt-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>compile</goal>
+									<goal>test</goal>
+									<goal>i18n</goal>
+								</goals>
+							</execution>
+						</executions>
+						<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
+							documentation at codehaus.org -->
+						<configuration>
+
+							<appEngineVersion>${gae.version}</appEngineVersion>
+							<!-- <appEngineHome>${gae.home}</appEngineHome> -->
+							<logLevel>INFO</logLevel>
+							<gwt.style>${gwt.style}</gwt.style>
+							<hostedWebapp>${webapp.directory}</hostedWebapp>
+							<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
+							<copyWebapp>true</copyWebapp>
+
+							<runTarget>UserUi.html</runTarget>
+							<hostedWebapp>${webappDirectory}</hostedWebapp>
+							<i18nMessagesBundle>com.boshanam.user.ui.gwt.client.Messages
+							</i18nMessagesBundle>
+						</configuration>
+					</plugin>
+					<!-- The actual maven-gae-plugin. Type "mvn gae:run" to run project, 
+						"mvn gae:deploy" to upload to GAE. -->
+					<plugin>
+						<groupId>net.kindleit</groupId>
+						<artifactId>maven-gae-plugin</artifactId>
+						<version>${maven-gae-plugin.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>net.kindleit</groupId>
+								<artifactId>gae-runtime</artifactId>
+								<version>${gae.version}</version>
+								<type>pom</type>
+							</dependency>
+						</dependencies>
+					</plugin>
+
+					<!-- Upload application to the appspot automatically, during release:perform -->
+					<plugin>
+						<artifactId>maven-release-plugin</artifactId>
+						<configuration>
+							<goals>gae:deploy</goals>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<repositories>
+				<repository>
+					<id>thirdparty-releases</id>
+					<name>JBoss Thirdparty Releases</name>
+					<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+				</repository>
+			</repositories>
+			<dependencies>
+				<dependency>
+					<groupId>com.boshanam</groupId>
+					<artifactId>user-core-google-impl</artifactId>
+					<version>${user-core-google-impl.version}</version>
+				</dependency>
+
+				<!-- Added for GAE Server -->
+
+				<!-- (Actually xalan classes available in Java 1.4+, but due to Maven 
+					build problem with GWT and GAE, gae server not able to load the related classes, 
+					need to identify the issue and do the proper fix) -->
+				<dependency>
+					<groupId>org.apache.xalan</groupId>
+					<artifactId>xalan</artifactId>
+					<version>2.7.1-1.jbossorg</version>
+				</dependency>
+
+				<dependency>
+					<groupId>net.kindleit</groupId>
+					<artifactId>gae-runtime</artifactId>
+					<version>1.6.0</version>
+					<type>pom</type>
+					<exclusions>
+						<exclusion>
+							<groupId>com.google.appengine</groupId>
+							<artifactId>appengine-tools-sdk</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 	<repositories>
 		<repository>
 			<id>smartclient</id>
 			<name>smartclient.com</name>
 			<url>http://www.smartclient.com/maven2</url>
 		</repository>
+
 	</repositories>
 
 	<properties>
-
-		<user-ui-core.version>${project.version}</user-ui-core.version>
-		<user-core.version>${project.version}</user-core.version>
+		<!-- Other configuration -->
+		<!-- PRETTY style during development, <profiles> used to configure other 
+			styles -->
+		<gwt.style>PRETTY</gwt.style>
 
 		<gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
 		<maven-war-plugin.version>2.1.1</maven-war-plugin.version>
 
-		<webappDirectory>${project.build.directory}/${project.build.finalName}
-		</webappDirectory>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
 
 	<dependencies>
@@ -69,31 +214,6 @@
 
 		<plugins>
 
-			<!-- GWT Maven Plugin -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test</goal>
-							<goal>i18n</goal>
-							<goal>generateAsync</goal>
-						</goals>
-					</execution>
-				</executions>
-				<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
-					documentation at codehaus.org -->
-				<configuration>
-					<runTarget>UserUi.html</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<i18nMessagesBundle>com.boshanam.user.ui.gwt.client.Messages
-					</i18nMessagesBundle>
-				</configuration>
-			</plugin>
-
 			<!-- Copy static web files before executing gwt:run -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -108,6 +228,15 @@
 					</execution>
 				</executions>
 				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>**/appengine-web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
 					<webappDirectory>${webappDirectory}</webappDirectory>
 				</configuration>
 			</plugin>
