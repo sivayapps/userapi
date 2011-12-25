@@ -10,9 +10,7 @@ import java.io.Serializable;
  * 
  */
 public class Person implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3518255151966938724L;
 	private Integer id;
 	private String name;
@@ -32,28 +30,33 @@ public class Person implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String toString() {
-		return "[ id : " + this.id + ", Name: " + this.name + "]";
+		return "( id : " + this.id + ", Name: " + this.name + ")";
 	}
 
 	@Override
 	public int hashCode() {
-		if(this.id != null ) {
+		if (this.id != null) {
 			return id.hashCode();
 		}
-		return super.hashCode();
+		return "".hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if(this.id != null) {
-			return this.id.equals(obj);
+		if (this == obj) {
+			return true;
 		}
-		return super.equals(obj);
+		if (obj instanceof Person) {
+			Person anotherPerson = (Person) obj;
+			if (this.id != null) {
+				return this.id.equals(anotherPerson.id);
+			} else if (anotherPerson.id == null) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
-	
 
 }
