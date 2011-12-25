@@ -62,7 +62,6 @@
 			<artifactId>user-core</artifactId>
 			<version>${user-core.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -80,7 +79,10 @@
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt-skins</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

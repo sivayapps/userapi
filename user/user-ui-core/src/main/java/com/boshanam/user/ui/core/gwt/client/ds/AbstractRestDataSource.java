@@ -14,7 +14,17 @@ import com.smartgwt.client.types.DSOperationType;
 import com.smartgwt.client.types.DSProtocol;
 
 /**
- * @author Swetha
+ * Base implementation of REST data source to be extended by most other specific
+ * data sources of SmartGwt.
+ * 
+ * Specifies JSON as underlying transport data format.
+ * 
+ * Uses URL encoding to submit request parameters in case of http PUT, as most
+ * servers can not identify posted parameters of PUT request.
+ * 
+ * @author Sivakumar Y
+ * @Email: shiva.forums@gmail.com
+ * @Date Dec 4, 2011 7:58:43 PM
  * 
  */
 public abstract class AbstractRestDataSource extends RestDataSource {
@@ -56,13 +66,21 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 
 	@Override
 	protected Object transformRequest(DSRequest request) {
-		
+
 		super.transformRequest(request);
 
 		// now post process the request for our own means
 		postProcessTransform(request);
 
-		return request.getData();
+		// don't return data, it is causing to post data to server again,
+		// causing the actual updated vale is getting duplicated as comma
+		// Separated values, i.e, if the updated value is "Sai", it will be
+		// treated by GAE (Google) server as "Sai,Sai". Because GAE is smart
+		// enough to recognize PUT parameters in addition to URL encoded
+		// parameters. No problem found with maven jetting server. To make this
+		// portable to GAE and also other servers, We are relying only on URL
+		// encoding to submit parameters in http PUT request.
+		return "";// request.getData();
 	}
 
 	/*
@@ -120,7 +138,7 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 	}
 
 	private boolean isPrimaryKey(String property) {
-		return getPrimaryKeyProperty().equals(property);
+		return getPrimaryKeyProperty().equalsIgnoreCase(property);
 	}
 
 	/*

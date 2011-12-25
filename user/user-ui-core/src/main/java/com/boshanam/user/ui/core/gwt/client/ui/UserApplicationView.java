@@ -20,7 +20,7 @@ public class UserApplicationView extends VLayout {
         personGrid.setHeight(224);  
         personGrid.setShowAllRecords(true); 
         PersonDataSource personDataSource = PersonDataSource.getInstance();
-        personDataSource.setCacheMaxAge(10);
+        personDataSource.setCacheMaxAge(0);
         personGrid.setDataSource(personDataSource);  
         personGrid.setAutoFetchData(true);  
         personGrid.setCanEdit(true);  
