@@ -1,17 +1,58 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<artifactId>user</artifactId>
 		<groupId>com.boshanam</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<groupId>com.boshanam</groupId>
 	<artifactId>user-core-classic-impl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<name>UserCoreClassicImpl</name>
 	<description>Core functionality required for User Management such as Services, Dao's implementation optimized for JPA 2.0 and Hibernate 3 etc.</description>
+
+
+	<properties>
+		<hibernate.version>3.6.0.Final</hibernate.version>
+	</properties>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.boshanam</groupId>
+			<artifactId>user-core</artifactId>
+			<version>${user-core.version}</version>
+		</dependency>
+
+		<!-- Hibernate dependencies -->
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.transaction</groupId>
+					<artifactId>jta</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
 </project>
