@@ -15,6 +15,13 @@
 	<name>UserCoreGoogleImpl</name>
 	<description>Core functionality required for User Management such as Services, Dao's implementation optimized for Google Datastore and Services with JPA etc.</description>
 
+	<properties>
+		<datanucleus-appengine.version>2.0.0-RC2</datanucleus-appengine.version>
+		<datanucleus-core.version>3.0.4</datanucleus-core.version>
+		<datanucleus-api-jpa.version>3.0.4</datanucleus-api-jpa.version>
+		<geronimo-jpa.version>1.0</geronimo-jpa.version>
+		<jdo-api.version>3.0</jdo-api.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -22,6 +29,42 @@
 			<artifactId>user-core</artifactId>
 			<version>${user-core.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine.orm</groupId>
+			<artifactId>datanucleus-appengine</artifactId>
+			<version>${datanucleus-appengine.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>${datanucleus-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jpa</artifactId>
+			<version>${datanucleus-api-jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jpa_2.0_spec</artifactId>
+			<version>${geronimo-jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.jdo</groupId>
+			<artifactId>jdo-api</artifactId>
+			<version>${jdo-api.version}</version>
+		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>maven-datanucleus-plugin</artifactId>
+				<version>3.0.0-release</version>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

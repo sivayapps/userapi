@@ -87,8 +87,8 @@
 		<maven-gae-plugin.version>0.9.2</maven-gae-plugin.version>
 
 		<!-- GWT needs at least java 1.5 -->
-		<maven.compiler.source>1.5</maven.compiler.source>
-		<maven.compiler.target>1.5</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
 
 		<!-- Plugin properties -->
 		<maven-source-plugin.version>2.1.2</maven-source-plugin.version>
@@ -177,7 +177,6 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4f.version}</version>
 			<type>jar</type>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
@@ -189,13 +188,11 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4f.version}</version>
 			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
-			<scope>runtime</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.jms</groupId>

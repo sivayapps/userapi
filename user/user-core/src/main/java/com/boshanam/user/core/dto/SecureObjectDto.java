@@ -6,6 +6,9 @@ package com.boshanam.user.core.dto;
 import java.util.Date;
 
 /**
+ * 
+ * Base class to be used for Security related objects with some common fields.
+ * 
  * @author Siva
  * @Email: shiva.forums@gmail.com
  * @Date Dec 15, 2011 9:42:45 PM
@@ -14,14 +17,14 @@ import java.util.Date;
 public class SecureObjectDto extends ObjectDto {
 
 	private static final long serialVersionUID = 5706176722836846192L;
-	
-	private String name;
-	private String description;
-	private Boolean active;
-	private Impact impact;
-	private Date creationDate;
-	private Date expiryDate;
-	private Date lastModifiedDate;
+
+	protected String name;
+	protected String description;
+	protected Boolean active;
+	protected Impact impact;
+	protected Date creationDate;
+	protected Date expiryDate;
+	protected Date lastModifiedDate;
 
 	public SecureObjectDto() {
 	}

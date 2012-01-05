@@ -1,0 +1,16 @@
+/**
+ * 
+ */
+package com.boshanam.user.core.persistence.dao;
+
+import com.boshanam.user.core.dto.UserDto;
+
+/**
+ * @author Siva
+ * @Email: shiva.forums@gmail.com
+ * @Date Jan 3, 2012 11:45:05 PM 
+ *
+ */
+public interface UserDao extends GenericDao<UserDto, String> {
+
+}

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ObjectDto implements Serializable {
 
 	private static final long serialVersionUID = -1239682838384783476L;
-	private Long id;
+	protected Long id;
 
 	public ObjectDto() {
 	}
