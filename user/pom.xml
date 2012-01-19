@@ -83,7 +83,7 @@
 		<smartgwt.version>3.0</smartgwt.version>
 
 		<gae.version>1.6.1</gae.version>
-		<gae.application.version>r16</gae.application.version>
+		<gae.application.version>r18</gae.application.version>
 		<maven-gae-plugin.version>0.9.2</maven-gae-plugin.version>
 
 		<!-- GWT needs at least java 1.5 -->
