@@ -21,6 +21,9 @@
 		<datanucleus-api-jpa.version>3.0.4</datanucleus-api-jpa.version>
 		<geronimo-jpa.version>1.0</geronimo-jpa.version>
 		<jdo-api.version>3.0</jdo-api.version>
+
+		<!-- Plugin versions -->
+		<maven-datanucleus-plugin.version>3.0.0-release</maven-datanucleus-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -62,7 +65,23 @@
 			<plugin>
 				<groupId>org.datanucleus</groupId>
 				<artifactId>maven-datanucleus-plugin</artifactId>
-				<version>3.0.0-release</version>
+				<version>${maven-datanucleus-plugin.version}</version>
+				<configuration>
+					<log4jConfiguration>${project.build.outputDirectory}/log4j.xml</log4jConfiguration>
+					<!-- Make sure this path contains your persistent classes! -->
+					<mappingIncludes>**/model/entities/**/*.class</mappingIncludes>
+					<verbose>true</verbose>
+					<enhancerName>ASM</enhancerName>
+					<api>JPA</api>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

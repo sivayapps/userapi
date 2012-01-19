@@ -6,6 +6,19 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="personService" class="com.boshanam.user.core.service.impl.PersonServiceImpl"></bean>
+	<bean id="personService" class="com.boshanam.user.core.service.impl.PersonServiceImpl">
+		<property name="personDao" ref="personDaoGoogleDsImpl"></property>
+	</bean>
+
+	<bean id="googleDsEMF"
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+		<property name="persistenceUnitName"
+			value="transactional_ds_non_transactional_ops_allowed" />
+	</bean>
+
+	<bean id="personDaoGoogleDsImpl"
+		class="com.boshanam.user.core.persistence.dao.google.impl.PersonDaoGoogleImpl">
+		<property name="entityManagerFactory" ref="googleDsEMF"></property>
+	</bean>
 
 </beans>

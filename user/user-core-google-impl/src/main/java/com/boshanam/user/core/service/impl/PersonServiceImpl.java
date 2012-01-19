@@ -3,16 +3,13 @@
  */
 package com.boshanam.user.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.boshanam.user.core.dto.PersonDto;
+import com.boshanam.user.core.persistence.dao.PersonDao;
 
 /**
  * @author Siva
@@ -24,10 +21,9 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 
 	private static Logger sLogger = LoggerFactory.getLogger(PersonServiceImpl.class);
 
-	private Map<Long, PersonDto> persons;
+	private PersonDao personDao;
 
 	public PersonServiceImpl() {
-		persons = Collections.synchronizedMap(new HashMap<Long, PersonDto>());
 	}
 
 	/*
@@ -36,16 +32,7 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	 * @see com.boshanam.user.core.service.IPersonService#getAllPersons()
 	 */
 	public List<PersonDto> getAllPersons() {
-		if (persons.size() > 0) {
-			return new ArrayList<PersonDto>(persons.values());
-		}
-		// Return a list of PersonDto objects
-		PersonDto p = new PersonDto();
-		p.setId((long) persons.size());
-		p.setName("OmSriSairam");
-		persons.put(p.getId(), p);
-		sLogger.debug("#############################  Got it ************** ##################");
-		return new ArrayList<PersonDto>(persons.values());
+		return personDao.findAll();
 	}
 
 	/*
@@ -56,11 +43,7 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	public PersonDto createPerson() {
 		// This should create a new person with a new primary key
 		PersonDto p = new PersonDto();
-		p.setId((long) (persons.size() + 1));
-		sLogger.debug("########## Created PersonDto: " + p);
-		persons.put(p.getId(), p);
-		sLogger.debug("########## After ADD(add new PersonDto), Persons List: " + persons);
-		sLogger.debug("########## Returning PersonDto: " + p);
+		personDao.create(p);
 		return p;
 	}
 
@@ -76,18 +59,16 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 		// being updated populated + the primary key.
 		// The method should return a full object with the same primary key.
 		sLogger.debug("########## Trying to find Updating Persons: " + personData);
-		PersonDto p = persons.get(personData.getId());
+		PersonDto p = personDao.findById(personData.getId());
 		if (p != null) {
 			sLogger.debug("########## Found PersonDto to Update: " + p);
-			sLogger.debug("########## Before Update Persons List: " + persons);
 			// persons.put(person.getId(),person);
-			if (personData.getName() != null) {
-				p.setName(personData.getName());
-			}
+			p.setName(personData.getName());
+			personDao.update(p);
 			sLogger.debug("########## Updated PersonDto: " + personData);
-			sLogger.debug("########## After Update Persons List: " + persons);
 		} else {
-			sLogger.debug("########## PersonDto not found to Update");
+			sLogger.debug("########## PersonDto not found to Update, creating now");
+			personDao.persist(personData);
 		}
 		return p;
 	}
@@ -100,9 +81,19 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	 * Long)
 	 */
 	public PersonDto deletePerson(Long id) {
-		PersonDto p = new PersonDto();
-		p.setId(id);
-		return persons.remove(p.getId());
+		PersonDto dto = personDao.findById(id);
+		if (dto != null) {
+			personDao.removeId(id);
+		}
+		return dto;
+	}
+
+	public PersonDao getPersonDao() {
+		return personDao;
+	}
+
+	public void setPersonDao(PersonDao personDao) {
+		this.personDao = personDao;
 	}
 
 }
