@@ -1,0 +1,12 @@
+# Lines starting with '#' are considered comments.
+# Ignore any file named foo.txt.
+
+# Ignore (generated) eclipse project files files, and maven build files
+.project
+.settings/
+.classpath
+target/
+# except foo.html which is maintained by hand.
+
+# Ignore objects and archives.
+*.[oa]
