@@ -1,5 +1,4 @@
 # Lines starting with '#' are considered comments.
-# Ignore any file named foo.txt.
 
 # Ignore (generated) eclipse project files files, and maven build files
 .project
