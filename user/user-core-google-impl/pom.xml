@@ -17,8 +17,8 @@
 
 	<properties>
 		<datanucleus-appengine.version>2.0.0-RC2</datanucleus-appengine.version>
-		<datanucleus-core.version>3.0.4</datanucleus-core.version>
-		<datanucleus-api-jpa.version>3.0.4</datanucleus-api-jpa.version>
+		<datanucleus-core.version>3.0.5</datanucleus-core.version>
+		<datanucleus-api-jpa.version>3.0.5</datanucleus-api-jpa.version>
 		<geronimo-jpa.version>1.0</geronimo-jpa.version>
 		<jdo-api.version>3.0</jdo-api.version>
 
@@ -82,6 +82,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.datanucleus</groupId>
+						<artifactId>datanucleus-core</artifactId>
+						<version>${datanucleus-core.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
