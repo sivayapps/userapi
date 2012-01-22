@@ -5,7 +5,9 @@
 .settings/
 .classpath
 target/
-# except foo.html which is maintained by hand.
+
+#ignore backup files created by editors
+*.bak
 
 # Ignore objects and archives.
 *.[oa]
