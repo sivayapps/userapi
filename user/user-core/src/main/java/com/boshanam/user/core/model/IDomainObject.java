@@ -2,6 +2,12 @@ package com.boshanam.user.core.model;
 
 import java.util.Collection;
 
+/**
+ * @author Siva
+ * @Email: shiva.forums@gmail.com
+ * @Date Jan 22, 2012 6:40:46 PM 
+ *
+ */
 public interface IDomainObject {
 
 	public Long getId();

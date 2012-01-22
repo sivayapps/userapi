@@ -3,14 +3,13 @@
  */
 package com.boshanam.user.core.model.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.boshanam.user.core.model.DomainObjectImpl;
+import com.boshanam.user.core.model.IPersonEntity;
 
 /**
  * @author Swetha
@@ -18,7 +17,7 @@ import com.boshanam.user.core.model.DomainObjectImpl;
  */
 
 @Entity
-public class Person extends DomainObjectImpl implements Serializable {
+public class Person extends DomainObjectImpl implements IPersonEntity {
 
 	private static final long serialVersionUID = -3518255151966938724L;
 

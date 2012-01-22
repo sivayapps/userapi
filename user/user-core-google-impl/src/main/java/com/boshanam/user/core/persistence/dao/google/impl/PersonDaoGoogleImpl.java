@@ -3,7 +3,6 @@
  */
 package com.boshanam.user.core.persistence.dao.google.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
-import com.boshanam.user.core.dto.PersonDto;
 import com.boshanam.user.core.model.entities.Person;
 import com.boshanam.user.core.persistence.dao.IPersonDao;
 
@@ -26,7 +24,7 @@ import com.boshanam.user.core.persistence.dao.IPersonDao;
  * @Date Jan 8, 2012 2:33:18 AM
  * 
  */
-public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
+public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao<Person> {
 
 	private static Logger sLogger = LoggerFactory.getLogger(PersonDaoGoogleImpl.class);
 
@@ -48,14 +46,11 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * @see com.boshanam.user.core.persistence.dao.GenericDao#findById(java.io.
 	 * Serializable)
 	 */
-	public PersonDto findById(Long id) {
+	public Person findById(Long id) {
 
 		Person p = this.getJpaTemplate().find(Person.class, id);
 		if (p != null) {
-			PersonDto dto = new PersonDto();
-			dto.setId(p.getId());
-			dto.setName(p.getName());
-			return dto;
+			return p;
 		}
 		return null;
 	}
@@ -66,7 +61,7 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * @see com.boshanam.user.core.persistence.dao.GenericDao#findById(java.io.
 	 * Serializable, java.lang.Integer)
 	 */
-	public PersonDto findById(Long id, Integer joinSizeFetchMode) {
+	public Person findById(Long id, Integer joinSizeFetchMode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -77,20 +72,15 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * @see com.boshanam.user.core.persistence.dao.GenericDao#findAll()
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PersonDto> findAll() {
-		return this.getJpaTemplate().executeFind(new JpaCallback<List<PersonDto>>() {
-			public List<PersonDto> doInJpa(EntityManager em) throws PersistenceException {
+	public List<Person> findAll() {
+		return this.getJpaTemplate().executeFind(new JpaCallback<List<Person>>() {
+			public List<Person> doInJpa(EntityManager em) throws PersistenceException {
 				Query q = em.createQuery("SELECT p FROM com.boshanam.user.core.model.entities.Person p");
 				List<Person> result = (List<Person>) q.getResultList();
-				List<PersonDto> voList = new ArrayList<PersonDto>();
+
 				if (result != null && result.size() > 0) {
-					for (Person u : result) {
-						PersonDto dto = new PersonDto();
-						dto.setId(u.getId());
-						dto.setName(u.getName());
-						voList.add(dto);
-					}
-					return voList;
+
+					return result;
 				} else {
 					return Collections.emptyList();
 				}
@@ -106,7 +96,7 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * com.boshanam.user.core.persistence.dao.GenericDao#findAll(java.lang.Integer
 	 * )
 	 */
-	public List<PersonDto> findAll(Integer joinSizeFetchMode) {
+	public List<Person> findAll(Integer joinSizeFetchMode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -118,19 +108,18 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * com.boshanam.user.core.persistence.dao.GenericDao#persist(java.lang.Object
 	 * )
 	 */
-	public void persist(PersonDto entity) {
+	public void persist(Person entity) {
 		throw new UnsupportedOperationException("Not yet implemented siva TODO");
-//		this.getJpaTemplate().persist(entity);
+		// this.getJpaTemplate().persist(entity);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.boshanam.user.core.persistence.dao.GenericDao#persistEntityId(java
+	 * @see com.boshanam.user.core.persistence.dao.GenericDao#persistEntityId(java
 	 * .lang.Object)
 	 */
-	public Long persistEntityId(PersonDto entity) {
+	public Long persistEntityId(Person entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -139,19 +128,18 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.boshanam.user.core.persistence.dao.GenericDao#create(java.lang.Object
-	 * )
+	 * com.boshanam.user.core.persistence.dao.GenericDao#create(java.lang.Object )
 	 */
-	public PersonDto create(PersonDto dto) {
+	public Person create(Person p) {
 
-		Person p = new Person();
+		if (p == null) {
+			p = new Person();
+		}
 		sLogger.debug("###########  DAO create() ##################");
 		this.getJpaTemplate().persist(p);
-		dto.setId(p.getId());
-		dto.setName(p.getName());
 
-		sLogger.debug("###########  DAO create() Person Entity created and persisted : " + dto);
-		return dto;
+		sLogger.debug("###########  DAO create() Person Entity created and persisted : " + p);
+		return p;
 
 	}
 
@@ -159,16 +147,13 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.boshanam.user.core.persistence.dao.GenericDao#update(java.lang.Object
-	 * )
+	 * com.boshanam.user.core.persistence.dao.GenericDao#update(java.lang.Object )
 	 */
-	public PersonDto update(PersonDto pDto) {
-		Person p = new Person();
-		p.setId(pDto.getId());
-		p.setName(pDto.getName());
+	public Person update(Person p) {
+
 		sLogger.debug("###########  DAO update() ##################");
 		this.getJpaTemplate().persist(p);
-		return pDto;
+		return p;
 	}
 
 	/*
@@ -177,7 +162,7 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * @see
 	 * com.boshanam.user.core.persistence.dao.GenericDao#merge(java.lang.Object)
 	 */
-	public PersonDto merge(PersonDto entity) {
+	public Person merge(Person entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -185,11 +170,10 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.boshanam.user.core.persistence.dao.GenericDao#mergeAndPersist(java
+	 * @see com.boshanam.user.core.persistence.dao.GenericDao#mergeAndPersist(java
 	 * .lang.Object)
 	 */
-	public void mergeAndPersist(PersonDto entity) {
+	public void mergeAndPersist(Person entity) {
 		// TODO Auto-generated method stub
 
 	}
@@ -198,10 +182,9 @@ public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.boshanam.user.core.persistence.dao.GenericDao#remove(java.lang.Object
-	 * )
+	 * com.boshanam.user.core.persistence.dao.GenericDao#remove(java.lang.Object )
 	 */
-	public void remove(PersonDto entity) {
+	public void remove(Person entity) {
 		// TODO Auto-generated method stub
 
 	}
