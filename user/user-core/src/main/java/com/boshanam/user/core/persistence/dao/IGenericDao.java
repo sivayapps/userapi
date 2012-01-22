@@ -12,7 +12,7 @@ import java.util.List;
  * @Date Dec 17, 2011 11:50:27 AM
  * 
  */
-public interface GenericDao<T, ID extends Serializable> {
+public interface IGenericDao<T, ID extends Serializable> {
 
 	/**
 	 * Method to determine if id exist in DB

@@ -11,6 +11,6 @@ import com.boshanam.user.core.dto.PrivilegeDto;
  * @Date Jan 4, 2012 11:28:51 AM 
  *
  */
-public interface PrivilegeDao extends GenericDao<PrivilegeDto, String> {
+public interface IPrivilegeDao extends IGenericDao<PrivilegeDto, String> {
 
 }

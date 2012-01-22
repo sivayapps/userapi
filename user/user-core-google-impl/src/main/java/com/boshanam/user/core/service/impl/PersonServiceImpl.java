@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.boshanam.user.core.dto.PersonDto;
-import com.boshanam.user.core.persistence.dao.PersonDao;
+import com.boshanam.user.core.persistence.dao.IPersonDao;
 
 /**
  * @author Siva
@@ -21,7 +21,7 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 
 	private static Logger sLogger = LoggerFactory.getLogger(PersonServiceImpl.class);
 
-	private PersonDao personDao;
+	private IPersonDao personDao;
 
 	public PersonServiceImpl() {
 	}
@@ -88,11 +88,11 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 		return dto;
 	}
 
-	public PersonDao getPersonDao() {
+	public IPersonDao getPersonDao() {
 		return personDao;
 	}
 
-	public void setPersonDao(PersonDao personDao) {
+	public void setPersonDao(IPersonDao personDao) {
 		this.personDao = personDao;
 	}
 

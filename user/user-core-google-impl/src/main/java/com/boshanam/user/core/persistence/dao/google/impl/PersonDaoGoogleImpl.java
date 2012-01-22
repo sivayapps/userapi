@@ -18,7 +18,7 @@ import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 import com.boshanam.user.core.dto.PersonDto;
 import com.boshanam.user.core.model.entities.Person;
-import com.boshanam.user.core.persistence.dao.PersonDao;
+import com.boshanam.user.core.persistence.dao.IPersonDao;
 
 /**
  * @author Siva
@@ -26,7 +26,7 @@ import com.boshanam.user.core.persistence.dao.PersonDao;
  * @Date Jan 8, 2012 2:33:18 AM
  * 
  */
-public class PersonDaoGoogleImpl extends JpaDaoSupport implements PersonDao {
+public class PersonDaoGoogleImpl extends JpaDaoSupport implements IPersonDao {
 
 	private static Logger sLogger = LoggerFactory.getLogger(PersonDaoGoogleImpl.class);
 

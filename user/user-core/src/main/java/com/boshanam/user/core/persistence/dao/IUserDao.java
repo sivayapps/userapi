@@ -11,6 +11,6 @@ import com.boshanam.user.core.dto.UserDto;
  * @Date Jan 3, 2012 11:45:05 PM 
  *
  */
-public interface UserDao extends GenericDao<UserDto, String> {
+public interface IUserDao extends IGenericDao<UserDto, String> {
 
 }

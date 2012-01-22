@@ -2,7 +2,7 @@ package com.boshanam.user.core.model;
 
 import java.util.Collection;
 
-public interface DomainObject {
+public interface IDomainObject {
 
 	public Long getId();
 

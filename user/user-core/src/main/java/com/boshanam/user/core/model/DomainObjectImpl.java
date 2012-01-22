@@ -3,7 +3,7 @@ package com.boshanam.user.core.model;
 import java.util.Collection;
 import java.util.Iterator;
 
-public abstract class DomainObjectImpl implements DomainObject {
+public abstract class DomainObjectImpl implements IDomainObject {
 
 	public abstract Long getId();
 
