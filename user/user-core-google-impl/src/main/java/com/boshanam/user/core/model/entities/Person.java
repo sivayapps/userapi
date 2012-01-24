@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.boshanam.user.core.model.DomainObjectImpl;
-import com.boshanam.user.core.model.IPersonEntity;
+import com.boshanam.user.core.model.IPerson;
 
 /**
  * @author Swetha
@@ -17,7 +17,7 @@ import com.boshanam.user.core.model.IPersonEntity;
  */
 
 @Entity
-public class Person extends DomainObjectImpl implements IPersonEntity {
+public class Person extends DomainObjectImpl implements IPerson {
 
 	private static final long serialVersionUID = -3518255151966938724L;
 

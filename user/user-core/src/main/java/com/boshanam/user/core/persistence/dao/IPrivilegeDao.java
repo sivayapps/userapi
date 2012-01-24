@@ -3,7 +3,7 @@
  */
 package com.boshanam.user.core.persistence.dao;
 
-import com.boshanam.user.core.dto.PrivilegeDto;
+import com.boshanam.user.core.model.IPrivilege;
 
 /**
  * @author Siva
@@ -11,6 +11,6 @@ import com.boshanam.user.core.dto.PrivilegeDto;
  * @Date Jan 4, 2012 11:28:51 AM 
  *
  */
-public interface IPrivilegeDao extends IGenericDao<PrivilegeDto, String> {
+public interface IPrivilegeDao<T extends IPrivilege> extends IGenericDao<T, String> {
 
 }

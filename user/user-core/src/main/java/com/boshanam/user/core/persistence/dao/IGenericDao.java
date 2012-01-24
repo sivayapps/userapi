@@ -119,7 +119,4 @@ public interface IGenericDao<T, ID extends Serializable> {
 	 */
 	ID removeId(ID id);
 
-	// BELOW THE METHOD FOCUSING ON MASSIVE MANAGEMENT
-	// TODO add on demand
-
 }

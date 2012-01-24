@@ -3,7 +3,7 @@
  */
 package com.boshanam.user.core.persistence.dao;
 
-import com.boshanam.user.core.dto.UserDto;
+import com.boshanam.user.core.model.IUser;
 
 /**
  * @author Siva
@@ -11,6 +11,6 @@ import com.boshanam.user.core.dto.UserDto;
  * @Date Jan 3, 2012 11:45:05 PM 
  *
  */
-public interface IUserDao extends IGenericDao<UserDto, String> {
+public interface IUserDao<T extends IUser> extends IGenericDao<T, String> {
 
 }

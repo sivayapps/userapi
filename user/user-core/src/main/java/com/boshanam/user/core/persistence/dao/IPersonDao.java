@@ -3,7 +3,7 @@
  */
 package com.boshanam.user.core.persistence.dao;
 
-import com.boshanam.user.core.model.IPersonEntity;
+import com.boshanam.user.core.model.IPerson;
 
 /**
  * @author Siva
@@ -11,6 +11,6 @@ import com.boshanam.user.core.model.IPersonEntity;
  * @Date Jan 8, 2012 2:25:33 AM 
  *
  */
-public interface IPersonDao<T extends IPersonEntity> extends IGenericDao<T, Long> {
+public interface IPersonDao<T extends IPerson> extends IGenericDao<T, Long> {
 
 }
