@@ -26,9 +26,9 @@ import com.boshanam.user.core.persistence.dao.IGenericDao;
  * @Date Jan 24, 2012 7:50:42 PM
  * 
  */
-public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable> extends JpaDaoSupport implements IGenericDao<T, ID> {
+public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializable> extends JpaDaoSupport implements IGenericDao<T, ID> {
 
-	private static Logger sLogger = LoggerFactory.getLogger(GenericDaoGaeImpl.class);
+	protected static Logger sLogger = LoggerFactory.getLogger(GenericDaoGaeImpl.class);
 
 	protected Class<T> persistentClass;
 
@@ -39,7 +39,6 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	public GenericDaoGaeImpl() {
 		this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		sLogger = LoggerFactory.getLogger(this.persistentClass);
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	public GenericDaoGaeImpl(final Class<T> persistentClass) {
 		super();
 		this.persistentClass = persistentClass;
-		sLogger = LoggerFactory.getLogger(this.persistentClass);
+		sLogger = LoggerFactory.getLogger(this.getClass().getName() + "<" + this.persistentClass.getSimpleName() + ">");
 	}
 
 	/*
@@ -158,7 +157,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	public ID persistEntityId(T entity) {
 		this.getJpaTemplate().persist(entity);
 		this.getJpaTemplate().flush();
-		return (ID) entity.getId();
+		return entity.getId();
 	}
 
 	/*
@@ -169,8 +168,10 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	 */
 	@Override
 	public T create(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		sLogger.debug("###########  DAO create() ##################");
+		this.getJpaTemplate().persist(entity);
+		sLogger.debug("###########  DAO create() Person Entity created and persisted : " + entity);
+		return entity;
 	}
 
 	/*
@@ -181,8 +182,9 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	 */
 	@Override
 	public T update(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		sLogger.debug("###########  DAO update() ##################");
+		entity = this.getJpaTemplate().merge(entity);
+		return entity;
 	}
 
 	/*
@@ -193,8 +195,9 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	 */
 	@Override
 	public T merge(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		sLogger.debug("###########  DAO merge() ##################");
+		entity = this.getJpaTemplate().merge(entity);
+		return entity;
 	}
 
 	/*
@@ -206,8 +209,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	 */
 	@Override
 	public void mergeAndPersist(T entity) {
-		// TODO Auto-generated method stub
-
+		this.getJpaTemplate().persist(this.getJpaTemplate().merge(entity));
 	}
 
 	/*
@@ -218,8 +220,9 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	 */
 	@Override
 	public void remove(T entity) {
-		// TODO Auto-generated method stub
-
+		if (entity != null) {
+			this.getJpaTemplate().remove(this.getJpaTemplate().merge(entity));
+		}
 	}
 
 	/*
@@ -230,8 +233,13 @@ public class GenericDaoGaeImpl<T extends IDomainObject, ID extends Serializable>
 	 */
 	@Override
 	public ID removeId(ID id) {
-		// TODO Auto-generated method stub
-		return null;
+		T _t = null;
+		if (id != null) {
+			_t = this.findById(id);
+			this.remove(_t);
+		}
+		// remove the id
+		return (_t != null) ? id : null;
 	}
 
 	/**
