@@ -17,9 +17,9 @@ import com.boshanam.user.core.model.IPerson;
  */
 
 @Entity
-public class Person extends DomainObjectImpl implements IPerson {
+public class Person extends DomainObjectImpl<Long> implements IPerson {
 
-	private static final long serialVersionUID = -3518255151966938724L;
+	private static final long serialVersionUID = -7754480792575612236L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,30 +8,15 @@ import java.util.Map;
 
 import com.boshanam.user.core.dto.PrivilegeDto;
 import com.boshanam.user.core.dto.RoleDto;
+import com.boshanam.user.core.dto.UserDto;
 
 /**
  * @author Siva
  * @Email: shiva.forums@gmail.com
- * @Date Jan 24, 2012 12:30:39 AM
+ * @Date Jan 26, 2012 12:54:46 AM
  * 
  */
-public interface IUser extends ISecureObject {
-
-	public String getEmail();
-
-	public void setEmail(String email);
-
-	public Date getDob();
-
-	public void setDob(Date dob);
-
-	public String getPhone();
-
-	public void setPhone(String phone);
-
-	public String getPwd();
-
-	public void setPwd(String pwd);
+public interface IGroup extends ISecureObject {
 
 	public Map<RoleDto, Date> getRoles();
 
@@ -40,5 +25,9 @@ public interface IUser extends ISecureObject {
 	public Map<PrivilegeDto, Date> getPrivileges();
 
 	public void setPrivileges(Map<PrivilegeDto, Date> privileges);
+
+	public Map<UserDto, Date> getUsers();
+
+	public void setUsers(Map<UserDto, Date> users);
 
 }

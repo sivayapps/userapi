@@ -5,6 +5,8 @@ package com.boshanam.user.core.dto;
 
 import java.util.Date;
 
+import com.boshanam.user.core.model.ISecureObject;
+
 /**
  * 
  * Base class to be used for Security related objects with some common fields.
@@ -14,7 +16,7 @@ import java.util.Date;
  * @Date Dec 15, 2011 9:42:45 PM
  * 
  */
-public class SecureObjectDto extends ObjectDto {
+public class SecureObjectDto extends ObjectDto implements ISecureObject {
 
 	private static final long serialVersionUID = 5706176722836846192L;
 

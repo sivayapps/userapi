@@ -12,7 +12,8 @@ public class UserUi implements EntryPoint {
 		// hide the animated 'loading.gif'
 		RootPanel.get("loading").setVisible(false);
 		
-		view.show();
+		//view.show();
+		RootPanel.get().add(view);
 
 	}
 

@@ -6,13 +6,15 @@ package com.boshanam.user.core.dto;
 import java.util.Date;
 import java.util.Map;
 
+import com.boshanam.user.core.model.IGroup;
+
 /**
  * @author Siva
  * @Email: shiva.forums@gmail.com
  * @Date Dec 15, 2011 10:50:00 PM
  * 
  */
-public class GroupDto extends SecureObjectDto {
+public class GroupDto extends SecureObjectDto implements IGroup {
 
 	private static final long serialVersionUID = 4459346640272385433L;
 

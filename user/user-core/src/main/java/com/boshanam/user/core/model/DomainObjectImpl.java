@@ -1,22 +1,23 @@
 package com.boshanam.user.core.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-public abstract class DomainObjectImpl implements IDomainObject {
+public abstract class DomainObjectImpl<ID extends Serializable> implements IDomainObject<ID> {
 
-	public abstract Long getId();
+	public abstract ID getId();
 
-	public abstract void setId(Long id);
+	public abstract void setId(ID id);
 
 	/**
 	 * Tests whether ID are equal between current object and other object
 	 * 
 	 * @param object
 	 * @throws NullPointerException
-	 *             if inputs are null
+	 *           if inputs are null
 	 * @throws IllegalArgumentException
-	 *             if input types are different
+	 *           if input types are different
 	 * @return
 	 */
 	public boolean hasSameIdSameClass(Object object) {
@@ -27,17 +28,18 @@ public abstract class DomainObjectImpl implements IDomainObject {
 			throw new IllegalArgumentException("Cannot check Id equality of different types [" + this.getClass().getName() + "] and ["
 					+ object.getClass().getName() + "]");
 
-		DomainObjectImpl otherObject = (DomainObjectImpl) object;
+		@SuppressWarnings("unchecked")
+		DomainObjectImpl<Long> otherObject = (DomainObjectImpl<Long>) object;
 
 		if (this.getId() == null || otherObject.getId() == null) {
 			throw new NullPointerException("cannot compare null Ids");
 		}
 
-		return this.getId().longValue() == otherObject.getId().longValue();
+		return this.getId().equals(otherObject.getId());
 
 	}
 
-	public <T extends DomainObjectImpl> boolean removeFromCollection(Collection<T> collection) {
+	public <T extends DomainObjectImpl<ID>> boolean removeFromCollection(Collection<T> collection) {
 		if (collection == null) {
 			throw new NullPointerException("inputs cannot be null");
 		}
@@ -51,7 +53,7 @@ public abstract class DomainObjectImpl implements IDomainObject {
 		return false;
 	}
 
-	public <T extends DomainObjectImpl> boolean isInCollection(Collection<T> collection) {
+	public <T extends DomainObjectImpl<ID>> boolean isInCollection(Collection<T> collection) {
 		if (collection == null) {
 			throw new NullPointerException("inputs cannot be null");
 		}
