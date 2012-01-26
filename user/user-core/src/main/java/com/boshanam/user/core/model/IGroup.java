@@ -6,10 +6,6 @@ package com.boshanam.user.core.model;
 import java.util.Date;
 import java.util.Map;
 
-import com.boshanam.user.core.dto.PrivilegeDto;
-import com.boshanam.user.core.dto.RoleDto;
-import com.boshanam.user.core.dto.UserDto;
-
 /**
  * @author Siva
  * @Email: shiva.forums@gmail.com
@@ -18,16 +14,16 @@ import com.boshanam.user.core.dto.UserDto;
  */
 public interface IGroup extends ISecureObject {
 
-	public Map<RoleDto, Date> getRoles();
+	public Map<IRole, Date> getRoles();
 
-	public void setRoles(Map<RoleDto, Date> roles);
+	public void setRoles(Map<IRole, Date> roles);
 
-	public Map<PrivilegeDto, Date> getPrivileges();
+	public Map<IPrivilege, Date> getPrivileges();
 
-	public void setPrivileges(Map<PrivilegeDto, Date> privileges);
+	public void setPrivileges(Map<IPrivilege, Date> privileges);
 
-	public Map<UserDto, Date> getUsers();
+	public Map<IUser, Date> getUsers();
 
-	public void setUsers(Map<UserDto, Date> users);
+	public void setUsers(Map<IUser, Date> users);
 
 }

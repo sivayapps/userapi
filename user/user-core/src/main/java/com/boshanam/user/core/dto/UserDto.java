@@ -6,6 +6,8 @@ package com.boshanam.user.core.dto;
 import java.util.Date;
 import java.util.Map;
 
+import com.boshanam.user.core.model.IPrivilege;
+import com.boshanam.user.core.model.IRole;
 import com.boshanam.user.core.model.IUser;
 
 /**
@@ -22,8 +24,8 @@ public class UserDto extends SecureObjectDto implements IUser {
 	private Date dob;
 	private String phone;
 	private String pwd;
-	private Map<RoleDto, Date> roles;
-	private Map<PrivilegeDto, Date> privileges;
+	private Map<IRole, Date> roles;
+	private Map<IPrivilege, Date> privileges;
 
 	public UserDto() {
 	}
@@ -67,19 +69,33 @@ public class UserDto extends SecureObjectDto implements IUser {
 		this.pwd = pwd;
 	}
 
-	public Map<RoleDto, Date> getRoles() {
+	/**
+	 * @return the roles
+	 */
+	public Map<IRole, Date> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Map<RoleDto, Date> roles) {
+	/**
+	 * @param roles
+	 *          the roles to set
+	 */
+	public void setRoles(Map<IRole, Date> roles) {
 		this.roles = roles;
 	}
 
-	public Map<PrivilegeDto, Date> getPrivileges() {
+	/**
+	 * @return the privileges
+	 */
+	public Map<IPrivilege, Date> getPrivileges() {
 		return privileges;
 	}
 
-	public void setPrivileges(Map<PrivilegeDto, Date> privileges) {
+	/**
+	 * @param privileges
+	 *          the privileges to set
+	 */
+	public void setPrivileges(Map<IPrivilege, Date> privileges) {
 		this.privileges = privileges;
 	}
 

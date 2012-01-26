@@ -6,8 +6,6 @@ package com.boshanam.user.core.model;
 import java.util.Date;
 import java.util.Map;
 
-import com.boshanam.user.core.dto.PrivilegeDto;
-
 /**
  * @author Siva
  * @Email: shiva.forums@gmail.com
@@ -16,8 +14,8 @@ import com.boshanam.user.core.dto.PrivilegeDto;
  */
 public interface IRole extends ISecureObject {
 
-	public Map<PrivilegeDto, Date> getPrivileges();
+	public Map<IPrivilege, Date> getPrivileges();
 
-	public void setPrivileges(Map<PrivilegeDto, Date> privileges);
+	public void setPrivileges(Map<IPrivilege, Date> privileges);
 
 }

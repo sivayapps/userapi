@@ -6,9 +6,6 @@ package com.boshanam.user.core.model;
 import java.util.Date;
 import java.util.Map;
 
-import com.boshanam.user.core.dto.PrivilegeDto;
-import com.boshanam.user.core.dto.RoleDto;
-
 /**
  * @author Siva
  * @Email: shiva.forums@gmail.com
@@ -33,12 +30,12 @@ public interface IUser extends ISecureObject {
 
 	public void setPwd(String pwd);
 
-	public Map<RoleDto, Date> getRoles();
+	public Map<IRole, Date> getRoles();
 
-	public void setRoles(Map<RoleDto, Date> roles);
+	public void setRoles(Map<IRole, Date> roles);
 
-	public Map<PrivilegeDto, Date> getPrivileges();
+	public Map<IPrivilege, Date> getPrivileges();
 
-	public void setPrivileges(Map<PrivilegeDto, Date> privileges);
+	public void setPrivileges(Map<IPrivilege, Date> privileges);
 
 }
