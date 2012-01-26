@@ -5,6 +5,7 @@
 .settings/
 .classpath
 target/
+~$*
 
 #ignore backup files created by editors
 *.bak
