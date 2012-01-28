@@ -6,6 +6,7 @@ package com.boshanam.user.core.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	private static Logger sLogger = LoggerFactory.getLogger(PersonServiceImpl.class);
 
 	private IPersonDao<Person> personDao;
+	private DozerBeanMapper dozerMapper;
 
 	public PersonServiceImpl() {
 	}
@@ -123,6 +125,20 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 		dto.setId(p.getId());
 		dto.setName(p.getName());
 		return dto;
+	}
+
+	/**
+	 * @return the dozerMapper
+	 */
+	public DozerBeanMapper getDozerMapper() {
+		return dozerMapper;
+	}
+
+	/**
+	 * @param dozerMapper the dozerMapper to set
+	 */
+	public void setDozerMapper(DozerBeanMapper dozerMapper) {
+		this.dozerMapper = dozerMapper;
 	}
 
 }

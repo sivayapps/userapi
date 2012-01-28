@@ -4,11 +4,14 @@
 package com.boshanam.user.core.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.boshanam.user.core.dto.Impact;
 import com.boshanam.user.core.dto.PrivilegeDto;
 import com.boshanam.user.core.model.entities.Privilege;
 import com.boshanam.user.core.persistence.dao.IPrivilegeDao;
@@ -24,6 +27,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	private static Logger sLogger = LoggerFactory.getLogger(PrivilegeServiceImpl.class);
 
 	private IPrivilegeDao<Privilege> privilegeDao;
+	private DozerBeanMapper dozerMapper;
 
 	public PrivilegeServiceImpl() {
 	}
@@ -35,15 +39,21 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	 */
 	public List<PrivilegeDto> getAllPrivileges() {
 		List<Privilege> persons = privilegeDao.findAll();
-		List<PrivilegeDto> personDtoList = new ArrayList<PrivilegeDto>();
-		if (persons != null && persons.size() > 0) {
-			for (Privilege u : persons) {
-				PrivilegeDto dto = new PrivilegeDto();
-				dto.setId(u.getId());
-				dto.setName(u.getName());
-				personDtoList.add(dto);
-			}
+		if (persons == null || persons.size() == 0) {
+			return Collections.emptyList();
 		}
+		List<PrivilegeDto> personDtoList = new ArrayList<PrivilegeDto>(persons.size());
+		getDozerMapper().map(persons, personDtoList);
+
+		// List<PrivilegeDto> personDtoList = new ArrayList<PrivilegeDto>();
+		// if (persons != null && persons.size() > 0) {
+		// for (Privilege u : persons) {
+		// PrivilegeDto dto = new PrivilegeDto();
+		// dto.setId(u.getId());
+		// dto.setName(u.getName());
+		// personDtoList.add(dto);
+		// }
+		// }
 		return personDtoList;
 	}
 
@@ -55,11 +65,10 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	public PrivilegeDto createPrivilege() {
 		// This should create a new person with a new primary key
 		Privilege p = new Privilege();
+		p.setImpact(Impact.Medium);
 		privilegeDao.create(p);
-		PrivilegeDto dto = new PrivilegeDto();
-		dto.setId(p.getId());
-		dto.setName(p.getName());
-		return dto;
+
+		return getDozerMapper().map(p, PrivilegeDto.class);
 	}
 
 	/*
@@ -69,24 +78,26 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	 * com.boshanam.user.core.service.IPersonService#updatePerson(com.boshanam
 	 * .user.core.dto.PersonDto)
 	 */
-	public PrivilegeDto updatePrivilege(PrivilegeDto personData) {
+	public PrivilegeDto updatePrivilege(PrivilegeDto privilegeData) {
 		// The person object will only have the fields that are
 		// being updated populated + the primary key.
 		// The method should return a full object with the same primary key.
-		sLogger.debug("########## Trying to find Updating Persons: " + personData);
-		Privilege p = privilegeDao.findById(personData.getId());
+		sLogger.debug("########## Trying to find Updating privilege: " + privilegeData);
+		Privilege p = privilegeDao.findById(privilegeData.getId());
 		if (p != null) {
-			sLogger.debug("########## Found PersonDto to Update: " + p);
+			sLogger.debug("########## Found privilege to Update: " + p);
 			// persons.put(person.getId(),person);
-			p.setName(personData.getName());
+			getDozerMapper().map(privilegeData, p);
+			// p.setName(privilegeData.getName());
 			privilegeDao.update(p);
-			sLogger.debug("########## Updated PersonDto: " + personData);
+			sLogger.debug("########## Updated PersonDto: " + privilegeData);
 		} else {
 			sLogger.debug("########## PersonDto not found to Update, creating now");
-			p = dtoToPerson(personData);
+			// p = dtoToPrivilege(privilegeData);
+			p = getDozerMapper().map(privilegeData, Privilege.class);
 			privilegeDao.persist(p);
 		}
-		return personData;
+		return privilegeData;
 	}
 
 	/*
@@ -96,7 +107,8 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	 * Long)
 	 */
 	public PrivilegeDto deletePrivilege(Long id) {
-		PrivilegeDto dto = privilegeToDto(privilegeDao.findById(id));
+		// PrivilegeDto dto = privilegeToDto(privilegeDao.findById(id));
+		PrivilegeDto dto = getDozerMapper().map(privilegeDao.findById(id), PrivilegeDto.class);
 		if (dto != null) {
 			privilegeDao.removeId(id);
 		}
@@ -111,7 +123,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 		this.privilegeDao = personDao;
 	}
 
-	public Privilege dtoToPerson(PrivilegeDto dto) {
+	public Privilege dtoToPrivilege(PrivilegeDto dto) {
 		Privilege p = new Privilege();
 		p.setId(dto.getId());
 		p.setName(dto.getName());
@@ -125,6 +137,21 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 		dto.setName(p.getName());
 		// TODO need to copy more props
 		return dto;
+	}
+
+	/**
+	 * @return the dozerMapper
+	 */
+	public DozerBeanMapper getDozerMapper() {
+		return dozerMapper;
+	}
+
+	/**
+	 * @param dozerMapper
+	 *          the dozerMapper to set
+	 */
+	public void setDozerMapper(DozerBeanMapper dozerMapper) {
+		this.dozerMapper = dozerMapper;
 	}
 
 }
