@@ -11,9 +11,15 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
-  <!-- Other module inherits                                      -->
- <inherits name='com.smartclient.theme.silverwave.SilverWave'/>
+  <!-- Default enterprise theme looks cool                  -->
+ <!-- <inherits name='com.smartclient.theme.silverwave.SilverWave'/>  --> 
+ <!-- <inherits name="com.smartgwt.SmartGwtNoTheme"/>
  
+ <inherits name='com.smartclient.theme.fleet.Fleet'/> 
+ <inherits name='com.smartclient.theme.blackops.BlackOps'/> 
+<inherits name='com.smartclient.theme.treefrog.TreeFrog'/>
+ <inherits name='com.smartclient.theme.fleet.Fleet'/> 
+ -->
  <inherits name='com.boshanam.user.ui.core.gwt.UserApplicationView'/>
   
  

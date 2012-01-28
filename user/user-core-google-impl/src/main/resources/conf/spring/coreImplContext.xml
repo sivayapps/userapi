@@ -6,9 +6,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="personService" class="com.boshanam.user.core.service.impl.PersonServiceImpl">
-		<property name="personDao" ref="personDaoGoogleDsImpl"></property>
-	</bean>
 
 	<bean id="googleDsEMF"
 		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
@@ -16,9 +13,34 @@
 			value="transactional_ds_non_transactional_ops_allowed" />
 	</bean>
 
+	<!-- ############# DAO bean definitions - START ################### -->
 	<bean id="personDaoGoogleDsImpl"
 		class="com.boshanam.user.core.persistence.dao.google.impl.PersonDaoGoogleImpl">
 		<property name="entityManagerFactory" ref="googleDsEMF"></property>
 	</bean>
+
+	<bean id="privilegeDaoGoogleDsImpl"
+		class="com.boshanam.user.core.persistence.dao.google.impl.PrivilegeDaoGoogleImpl">
+		<property name="entityManagerFactory" ref="googleDsEMF"></property>
+	</bean>
+
+	<!-- ############## DAO bean definitions - END ############### -->
+
+	<!-- ############# DAO bean definitions - START ################### -->
+	<bean id="personService" class="com.boshanam.user.core.service.impl.PersonServiceImpl">
+		<property name="personDao" ref="personDaoGoogleDsImpl" />
+		<!-- Dozer mapper is defned in coreContext.xml in user-core module -->
+		<property name="dozerMapper" ref="dozerBeanMapperFactory" />
+	</bean>
+
+	<bean id="privilegeService"
+		class="com.boshanam.user.core.service.impl.PrivilegeServiceImpl">
+		<property name="privilegeDao" ref="privilegeDaoGoogleDsImpl" />
+		<!-- Dozer mapper is defned in coreContext.xml in user-core module -->
+		<property name="dozerMapper" ref="dozerBeanMapperFactory" />
+	</bean>
+
+
+	<!-- ############## DAO bean definitions - END ############### -->
 
 </beans>

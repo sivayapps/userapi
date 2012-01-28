@@ -17,11 +17,13 @@ import com.boshanam.user.core.dto.PrivilegeDto;
 import com.boshanam.user.core.service.IPrivilegeService;
 
 /**
- * @author Swetha
+ * @author Siva
+ * @Email: shiva.forums@gmail.com
+ * @Date Jan 28, 2012 5:48:16 PM
  * 
  */
 @Controller
-@RequestMapping("/person")
+@RequestMapping("/privilege")
 public class PrivilegeController {
 
 	private static Logger sLogger = LoggerFactory.getLogger(PrivilegeController.class);
@@ -34,7 +36,7 @@ public class PrivilegeController {
 	List<PrivilegeDto> getAllPersons() {
 
 		sLogger.debug("#############################  get All Privileges ************** ##################");
-		return service.getAllPrivilege();
+		return service.getAllPrivileges();
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
@@ -77,5 +79,5 @@ public class PrivilegeController {
 	public void setService(IPrivilegeService service) {
 		this.service = service;
 	}
-
+	
 }

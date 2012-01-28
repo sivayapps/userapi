@@ -1,7 +1,6 @@
 package com.boshanam.user.ui.core.gwt.client.ui;
 
 import com.boshanam.user.ui.core.gwt.client.ds.PersonDataSource;
-import com.google.gwt.user.client.Window;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -15,13 +14,8 @@ public class UserApplicationView extends VLayout {
 
 	public UserApplicationView() {
 
-		Window.enableScrolling(false);
-		Window.setMargin("0px");
-
-		setWidth100();
-		setHeight100();
 		personGrid = new ListGrid();
-		personGrid.setWidth100();
+		personGrid.setWidth("*");
 		personGrid.setHeight("*");
 		personGrid.setShowAllRecords(true);
 		PersonDataSource personDataSource = PersonDataSource.getInstance();
@@ -31,7 +25,7 @@ public class UserApplicationView extends VLayout {
 		personGrid.setCanEdit(true);
 
 		final IButton addButton = new IButton("Add new Person");
-		addButton.setWidth100();
+		addButton.setWidth("*");
 		addButton.setHeight("10%");
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

@@ -3,17 +3,18 @@
  */
 package com.boshanam.user.ui.core.gwt.client.ds;
 
-import com.smartgwt.client.data.DataSourceField;
+import com.boshanam.user.ui.core.gwt.client.Constants;
 import com.smartgwt.client.data.fields.DataSourceBooleanField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
+import com.smartgwt.client.data.fields.DataSourceEnumField;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.types.FieldType;
 
 /**
  * @author Siva
  * @Email: shiva.forums@gmail.com
- * @Date Jan 26, 2012 9:23:28 PM 
- *
+ * @Date Jan 26, 2012 9:23:28 PM
+ * 
  */
 public class PrivilegeDataSource extends AbstractRestJsonDataSource {
 
@@ -34,16 +35,19 @@ public class PrivilegeDataSource extends AbstractRestJsonDataSource {
 	protected void init() {
 		super.init();
 		setJsonRecordXPath("/");
-		DataSourceField idField = new DataSourceField("id", FieldType.INTEGER, "Id");
+		DataSourceIntegerField idField = new DataSourceIntegerField("id", "Id");
 		idField.setPrimaryKey(true);
+		idField.setRequired(true);
 		idField.setCanEdit(false);
-		DataSourceField nameField = new DataSourceTextField("name", "Name");
-		DataSourceField descriptionField = new DataSourceTextField("description", "Description");
-		DataSourceField activeField = new DataSourceBooleanField("active", "Active");
-		DataSourceField impactField = new DataSourceTextField("impact", "Impact");
-		DataSourceField creationDateField = new DataSourceDateField("creationDate", "CreationDate");
-		DataSourceField expiryDate = new DataSourceDateField("expiryDate", "ExpiryDate");
-		DataSourceField lastModifiedDateField = new DataSourceDateField("lastModifiedDate", "LastModifiedDate");
+		DataSourceTextField nameField = new DataSourceTextField("name", "Name");
+		DataSourceTextField descriptionField = new DataSourceTextField("description", "Description");
+		DataSourceBooleanField activeField = new DataSourceBooleanField("active", "Active");
+		DataSourceEnumField impactField = new DataSourceEnumField("impact", "Impact");
+		impactField.setValueMap(Constants.IMPACT_ENUM_VALUES);
+
+		DataSourceDateField creationDateField = new DataSourceDateField("creationDate", "CreationDate");
+		DataSourceDateField expiryDate = new DataSourceDateField("expiryDate", "ExpiryDate");
+		DataSourceDateField lastModifiedDateField = new DataSourceDateField("lastModifiedDate", "LastModifiedDate");
 		setFields(idField, nameField, descriptionField, activeField, impactField, creationDateField, expiryDate, lastModifiedDateField);
 	}
 
