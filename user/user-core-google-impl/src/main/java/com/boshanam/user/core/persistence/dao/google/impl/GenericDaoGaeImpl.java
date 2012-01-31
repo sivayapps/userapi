@@ -143,6 +143,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public void persist(T entity) {
+		sLogger.debug("###########  DAO persist() ##################" + entity);
 		this.getJpaTemplate().persist(entity);
 	}
 
@@ -155,6 +156,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public ID persistEntityId(T entity) {
+		sLogger.debug("###########  DAO persistEntityId() ##################" + entity);
 		this.getJpaTemplate().persist(entity);
 		this.getJpaTemplate().flush();
 		return entity.getId();
@@ -182,7 +184,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public T update(T entity) {
-		sLogger.debug("###########  DAO update() ##################");
+		sLogger.debug("###########  DAO update() ##################" + entity);
 		entity = this.getJpaTemplate().merge(entity);
 		return entity;
 	}
@@ -195,7 +197,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public T merge(T entity) {
-		sLogger.debug("###########  DAO merge() ##################");
+		sLogger.debug("###########  DAO merge() ##################" + entity);
 		entity = this.getJpaTemplate().merge(entity);
 		return entity;
 	}
@@ -209,6 +211,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public void mergeAndPersist(T entity) {
+		sLogger.debug("###########  DAO mergeAndPersist() ##################" + entity);
 		this.getJpaTemplate().persist(this.getJpaTemplate().merge(entity));
 	}
 
@@ -220,6 +223,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public void remove(T entity) {
+		sLogger.debug("###########  DAO mergeAndPersist() ##################" + entity);
 		if (entity != null) {
 			this.getJpaTemplate().remove(this.getJpaTemplate().merge(entity));
 		}

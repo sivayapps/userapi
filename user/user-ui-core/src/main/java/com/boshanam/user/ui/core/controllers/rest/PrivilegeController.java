@@ -33,7 +33,7 @@ public class PrivilegeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody
-	List<PrivilegeDto> getAllPersons() {
+	List<PrivilegeDto> getAll() {
 
 		sLogger.debug("#############################  get All Privileges ************** ##################");
 		return service.getAllPrivileges();
@@ -41,7 +41,7 @@ public class PrivilegeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
 	public @ResponseBody
-	PrivilegeDto updatePerson(@ModelAttribute PrivilegeDto privilegeData) {
+	PrivilegeDto update(@ModelAttribute PrivilegeDto privilegeData) {
 		// The person object will only have the fields that are
 		// being updated populated + the primary key.
 		// The method should return a full object with the same primary key.
@@ -51,7 +51,7 @@ public class PrivilegeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public @ResponseBody
-	PrivilegeDto createPerson() {
+	PrivilegeDto create() {
 		// This should create a new person with a new primary key
 
 		sLogger.debug("#############################  Create Privilege ************** ##################");
@@ -60,7 +60,7 @@ public class PrivilegeController {
 
 	@RequestMapping(value = "/id/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody
-	PrivilegeDto deletePerson(@PathVariable("id") Long id) {
+	PrivilegeDto delete(@PathVariable("id") Long id) {
 		sLogger.debug("#############################  Delete Privilege ************** ##################");
 		// This should delete a person and return the deleted person object
 		return service.deletePrivilege(id);
@@ -79,5 +79,5 @@ public class PrivilegeController {
 	public void setService(IPrivilegeService service) {
 		this.service = service;
 	}
-	
+
 }

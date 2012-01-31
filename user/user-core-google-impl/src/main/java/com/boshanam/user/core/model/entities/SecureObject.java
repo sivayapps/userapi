@@ -28,21 +28,29 @@ import com.boshanam.user.core.model.ISecureObject;
 public class SecureObject extends DomainObjectImpl<Long> implements ISecureObject {
 
 	private static final long serialVersionUID = -9220462938439127648L;
-	
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-  
+
 	protected String name;
 	protected String description;
 	protected Boolean active;
-	
+
 	@Enumerated(EnumType.STRING)
 	protected Impact impact;
-	
+
 	protected Date creationDate;
 	protected Date expiryDate;
 	protected Date lastModifiedDate;
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID=").append(getId()).append(", Name=").append(getName()).append(",Description=").append(getDescription()).append(",Active=")
+				.append(getActive()).append(",Impact=").append(getImpact()).append(",CreationDate=").append(getCreationDate()).append(",expiryDate=")
+				.append(getExpiryDate()).append(",lastModifiedDate=" + getLastModifiedDate());
+		return sb.toString();
+	}
 
 	public Long getId() {
 		return id;
