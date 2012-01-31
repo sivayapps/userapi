@@ -3,9 +3,10 @@
  */
 package com.boshanam.user.ui.core.gwt.client.ds;
 
-import com.boshanam.user.ui.core.gwt.client.Constants;
+import com.boshanam.user.ui.core.gwt.client.GlobalClientConstants;
 import com.smartgwt.client.data.fields.DataSourceBooleanField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
+import com.smartgwt.client.data.fields.DataSourceDateTimeField;
 import com.smartgwt.client.data.fields.DataSourceEnumField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
@@ -43,9 +44,10 @@ public class PrivilegeDataSource extends AbstractRestJsonDataSource {
 		DataSourceTextField descriptionField = new DataSourceTextField("description", "Description");
 		DataSourceBooleanField activeField = new DataSourceBooleanField("active", "Active");
 		DataSourceEnumField impactField = new DataSourceEnumField("impact", "Impact");
-		impactField.setValueMap(Constants.IMPACT_ENUM_VALUES);
+		impactField.setValueMap(GlobalClientConstants.IMPACT_ENUM_VALUES);
 
-		DataSourceDateField creationDateField = new DataSourceDateField("creationDate", "CreationDate");
+		DataSourceDateTimeField creationDateField = new DataSourceDateTimeField("creationDate", "CreationDate");
+		creationDateField.setCanSave(false);
 		DataSourceDateField expiryDate = new DataSourceDateField("expiryDate", "ExpiryDate");
 		DataSourceDateField lastModifiedDateField = new DataSourceDateField("lastModifiedDate", "LastModifiedDate");
 		setFields(idField, nameField, descriptionField, activeField, impactField, creationDateField, expiryDate, lastModifiedDateField);

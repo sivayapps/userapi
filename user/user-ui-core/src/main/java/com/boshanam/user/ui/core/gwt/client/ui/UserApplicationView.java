@@ -15,8 +15,8 @@ public class UserApplicationView extends VLayout {
 	public UserApplicationView() {
 
 		personGrid = new ListGrid();
-		personGrid.setWidth("*");
-		personGrid.setHeight("*");
+		personGrid.setWidth100();
+		personGrid.setHeight100();
 		personGrid.setShowAllRecords(true);
 		PersonDataSource personDataSource = PersonDataSource.getInstance();
 		personDataSource.setCacheMaxAge(0);
@@ -25,7 +25,7 @@ public class UserApplicationView extends VLayout {
 		personGrid.setCanEdit(true);
 
 		final IButton addButton = new IButton("Add new Person");
-		addButton.setWidth("*");
+		addButton.setWidth100();
 		addButton.setHeight("10%");
 		addButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

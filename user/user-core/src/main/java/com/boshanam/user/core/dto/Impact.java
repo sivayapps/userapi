@@ -11,7 +11,7 @@ import java.io.Serializable;
  * should be updated in below classes as well, due gwt dependency on sources i
  * am not directly using this class in gwt client code for ui .
  * 
- * com.boshanam.user.ui.core.gwt.client.Constants
+ * com.boshanam.user.ui.core.gwt.client.GlobalClientConstants
  * 
  * @author Sivakumar Y
  * @Email: shiva.forums@gmail.com

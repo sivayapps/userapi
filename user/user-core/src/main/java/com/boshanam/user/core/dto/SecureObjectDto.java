@@ -5,6 +5,9 @@ package com.boshanam.user.core.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.boshanam.user.core.GlobalConstants;
 import com.boshanam.user.core.model.ISecureObject;
 
 /**
@@ -24,11 +27,25 @@ public class SecureObjectDto extends ObjectDto implements ISecureObject {
 	protected String description;
 	protected Boolean active;
 	protected Impact impact;
+
+	@DateTimeFormat(iso = DateTimeFormat.ISO.NONE, pattern = GlobalConstants.APPLICATION_DATE_TIME_FORMAT)
 	protected Date creationDate;
+
+	@DateTimeFormat(iso = DateTimeFormat.ISO.NONE, pattern = GlobalConstants.APPLICATION_DATE_TIME_FORMAT)
 	protected Date expiryDate;
+
+	@DateTimeFormat(iso = DateTimeFormat.ISO.NONE, pattern = GlobalConstants.APPLICATION_DATE_TIME_FORMAT)
 	protected Date lastModifiedDate;
 
 	public SecureObjectDto() {
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID=").append(getId()).append(", Name=").append(getName()).append(",Description=").append(getDescription()).append(",Active=")
+				.append(getActive()).append(",Impact=").append(getImpact()).append(",CreationDate=").append(getCreationDate()).append(",expiryDate=")
+				.append(getExpiryDate()).append(",lastModifiedDate=" + getLastModifiedDate());
+		return sb.toString();
 	}
 
 	/**

@@ -3,15 +3,20 @@
  */
 package com.boshanam.user.ui.core.gwt.client.ds;
 
+import java.util.Date;
 import java.util.Map;
 
+import com.boshanam.user.ui.core.gwt.client.GlobalClientConstants;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.OperationBinding;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.RestDataSource;
 import com.smartgwt.client.types.DSOperationType;
 import com.smartgwt.client.types.DSProtocol;
+import com.smartgwt.client.util.JSON;
 
 /**
  * Base implementation of REST data source to be extended by most other specific
@@ -48,6 +53,7 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 		OperationBinding update = new OperationBinding();
 		update.setOperationType(DSOperationType.UPDATE);
 		DSRequest updateProps = new DSRequest();
+
 		updateProps.setHttpMethod("PUT");
 		update.setRequestProperties(updateProps);
 
@@ -72,15 +78,20 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 		// now post process the request for our own means
 		postProcessTransform(request);
 
+		JavaScriptObject jso = request.getData();
+		String s1 = JSON.encode(jso);
+		return s1;
+
 		// don't return data, it is causing to post data to server again,
 		// causing the actual updated vale is getting duplicated as comma
 		// Separated values, i.e, if the updated value is "Sai", it will be
 		// treated by GAE (Google) server as "Sai,Sai". Because GAE is smart
 		// enough to recognize PUT parameters in addition to URL encoded
-		// parameters. No problem found with maven jetting server. To make this
+		// parameters. No problem found with maven jetty server. To make this
 		// portable to GAE and also other servers, We are relying only on URL
 		// encoding to submit parameters in http PUT request.
-		return "";// request.getData();
+		// return request.getData();
+		// return "";// request.getData();
 	}
 
 	/*
@@ -93,22 +104,26 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 		Map dataMap = request.getAttributeAsMap("data");
 		if (request.getOperationType() == DSOperationType.REMOVE) {
 			// in case of remove, append the primary key
-			url.append(getPrimaryKeyProperty()).append("/")
-					.append(dataMap.get(getPrimaryKeyProperty()));
+			url.append(getPrimaryKeyProperty()).append("/").append(dataMap.get(getPrimaryKeyProperty()));
 		} else if (request.getOperationType() == DSOperationType.UPDATE) {
 			appendParameters(url, request);
 		}
-
-		request.setActionURL(URL.encode(url.toString()));
+		// Replace + with '%2B' otherwise it will be encoded to space
+		String urlEncoded = URL.encode(url.toString().replaceAll("\\+", "%2B"));
+		// % from above will get encoded to '%252' converting it back to '%' which
+		// creates '%2B' equal to '+' sign, other wise it will be treated by server
+		// as '%2B' instead of '+'
+		urlEncoded = urlEncoded.replaceAll("%252B", "%2B");
+		request.setActionURL(urlEncoded);
 	}
 
 	/*
 	 * This simply appends parameters that have changed to the URL so that PUT
 	 * requests go through successfully. This is usually necessary because when
-	 * smart GWT updates a row using a form, it sends the data as form
-	 * parameters. Most servers cannot understand this and will simply disregard
-	 * the form data sent to the server via PUT. So we need to transform the
-	 * form data into URL parameters.
+	 * smart GWT updates a row using a form, it sends the data as form parameters.
+	 * Most servers cannot understand this and will simply disregard the form data
+	 * sent to the server via PUT. So we need to transform the form data into URL
+	 * parameters.
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void appendParameters(StringBuilder url, DSRequest request) {
@@ -122,11 +137,23 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 
 		for (Object keyObj : dataMap.keySet()) {
 			String key = (String) keyObj;
-			if (!dataMap.get(key).equals(oldValues.getAttribute(key))
-					|| isPrimaryKey(key)) {
-				// only append those values that changed or are primary keys
-				url.append(key).append('=').append(dataMap.get(key))
-						.append('&');
+			// TODO currently causing issues when we transmit only modified values.
+			// as these values will be directly mapped to DTO beans by spring, and
+			// there is no way to identify modified values (checking null is not
+			// useful as in case of setting empty value(removing values) to columns
+			// also send null to server)
+			// only append those values that changed or are primary keys
+			if (!dataMap.get(key).equals(oldValues.getAttribute(key)) || isPrimaryKey(key)) {
+
+				Object val = dataMap.get(key);
+				if (key.toLowerCase().indexOf("date") >= 0 || key.toLowerCase().indexOf("datetime") >= 0) {
+					// It is date handle it separately
+					DateTimeFormat dateFormatter = DateTimeFormat.getFormat(GlobalClientConstants.DATE_FORMAT);
+					// dateFormatter.format(getAttributeAsDate("OrderDate "));
+					// ((Date) val).
+					val = dateFormatter.format((Date) val);
+				}
+				url.append(key).append('=').append(val).append('&');
 				paramsAppended = true;
 			}
 		}
@@ -137,7 +164,7 @@ public abstract class AbstractRestDataSource extends RestDataSource {
 		}
 	}
 
-	private boolean isPrimaryKey(String property) {
+	public boolean isPrimaryKey(String property) {
 		return getPrimaryKeyProperty().equalsIgnoreCase(property);
 	}
 
