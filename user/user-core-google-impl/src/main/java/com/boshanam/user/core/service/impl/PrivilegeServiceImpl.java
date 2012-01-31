@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.boshanam.user.core.dto.Impact;
 import com.boshanam.user.core.dto.PrivilegeDto;
+import com.boshanam.user.core.mapping.util.DozerMappingUtil;
 import com.boshanam.user.core.model.entities.Privilege;
 import com.boshanam.user.core.persistence.dao.IPrivilegeDao;
 
@@ -27,7 +27,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	private static Logger sLogger = LoggerFactory.getLogger(PrivilegeServiceImpl.class);
 
 	private IPrivilegeDao<Privilege> privilegeDao;
-	private DozerBeanMapper dozerMapper;
+	private DozerMappingUtil dozerMappingUtil;
 
 	public PrivilegeServiceImpl() {
 	}
@@ -43,7 +43,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 			return Collections.emptyList();
 		}
 		List<PrivilegeDto> personDtoList = new ArrayList<PrivilegeDto>(persons.size());
-		getDozerMapper().map(persons, personDtoList);
+		getDozerMappingUtil().map(persons, personDtoList);
 
 		// List<PrivilegeDto> personDtoList = new ArrayList<PrivilegeDto>();
 		// if (persons != null && persons.size() > 0) {
@@ -68,7 +68,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 		p.setImpact(Impact.Medium);
 		privilegeDao.create(p);
 
-		return getDozerMapper().map(p, PrivilegeDto.class);
+		return getDozerMappingUtil().map(p, PrivilegeDto.class);
 	}
 
 	/*
@@ -87,16 +87,21 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 		if (p != null) {
 			sLogger.debug("########## Found privilege to Update: " + p);
 			// persons.put(person.getId(),person);
-			getDozerMapper().map(privilegeData, p);
+			getDozerMappingUtil().map(privilegeData, p);
 			// p.setName(privilegeData.getName());
 			privilegeDao.update(p);
 			sLogger.debug("########## Updated PersonDto: " + privilegeData);
 		} else {
 			sLogger.debug("########## PersonDto not found to Update, creating now");
 			// p = dtoToPrivilege(privilegeData);
-			p = getDozerMapper().map(privilegeData, Privilege.class);
+			p = getDozerMappingUtil().map(privilegeData, Privilege.class);
 			privilegeDao.persist(p);
 		}
+		// This copy needed because dto from request may not contain all fields
+		// values, so we should copy all fields to dto from persistent entity before
+		// returning to view
+
+		getDozerMappingUtil().map(p, privilegeData);
 		return privilegeData;
 	}
 
@@ -108,7 +113,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	 */
 	public PrivilegeDto deletePrivilege(Long id) {
 		// PrivilegeDto dto = privilegeToDto(privilegeDao.findById(id));
-		PrivilegeDto dto = getDozerMapper().map(privilegeDao.findById(id), PrivilegeDto.class);
+		PrivilegeDto dto = getDozerMappingUtil().map(privilegeDao.findById(id), PrivilegeDto.class);
 		if (dto != null) {
 			privilegeDao.removeId(id);
 		}
@@ -140,18 +145,18 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 	}
 
 	/**
-	 * @return the dozerMapper
+	 * @return the dozerMappingUtil
 	 */
-	public DozerBeanMapper getDozerMapper() {
-		return dozerMapper;
+	public DozerMappingUtil getDozerMappingUtil() {
+		return dozerMappingUtil;
 	}
 
 	/**
-	 * @param dozerMapper
-	 *          the dozerMapper to set
+	 * @param dozerMappingUtil
+	 *          the dozerMappingUtil to set
 	 */
-	public void setDozerMapper(DozerBeanMapper dozerMapper) {
-		this.dozerMapper = dozerMapper;
+	public void setDozerMappingUtil(DozerMappingUtil dozerMappingUtil) {
+		this.dozerMappingUtil = dozerMappingUtil;
 	}
 
 }

@@ -30,14 +30,14 @@
 	<bean id="personService" class="com.boshanam.user.core.service.impl.PersonServiceImpl">
 		<property name="personDao" ref="personDaoGoogleDsImpl" />
 		<!-- Dozer mapper is defned in coreContext.xml in user-core module -->
-		<property name="dozerMapper" ref="dozerBeanMapperFactory" />
+		<property name="dozerMappingUtil" ref="dozerBeanMapperUtil" />
 	</bean>
 
 	<bean id="privilegeService"
 		class="com.boshanam.user.core.service.impl.PrivilegeServiceImpl">
 		<property name="privilegeDao" ref="privilegeDaoGoogleDsImpl" />
 		<!-- Dozer mapper is defned in coreContext.xml in user-core module -->
-		<property name="dozerMapper" ref="dozerBeanMapperFactory" />
+		<property name="dozerMappingUtil" ref="dozerBeanMapperUtil" />
 	</bean>
 
 

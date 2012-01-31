@@ -45,6 +45,10 @@
 	</logger>
 
 	<logger name="org.dozer">
+		<level value="warn" />
+	</logger>
+
+	<logger name="org.codehaus.jackson">
 		<level value="debug" />
 	</logger>
 

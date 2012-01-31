@@ -8,7 +8,11 @@
 
 
 	<bean id="dozerBeanMapperFactory" class="org.dozer.spring.DozerBeanMapperFactoryBean">
-		<property name="mappingFiles" value="classpath*:/*dozer-mapping.xml" />
+		<property name="mappingFiles" value="classpath*:conf/dozer/*dozer-mapping.xml" />
+	</bean>
+
+	<bean id="dozerBeanMapperUtil" class="com.boshanam.user.core.mapping.util.DozerMappingUtil">
+		<constructor-arg ref="dozerBeanMapperFactory"></constructor-arg>
 	</bean>
 
 </beans>
