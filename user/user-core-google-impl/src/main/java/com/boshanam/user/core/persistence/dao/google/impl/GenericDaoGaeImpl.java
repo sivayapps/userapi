@@ -223,7 +223,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 */
 	@Override
 	public void remove(T entity) {
-		sLogger.debug("###########  DAO mergeAndPersist() ##################" + entity);
+		sLogger.debug("###########  DAO remove() ##################" + entity);
 		if (entity != null) {
 			this.getJpaTemplate().remove(this.getJpaTemplate().merge(entity));
 		}

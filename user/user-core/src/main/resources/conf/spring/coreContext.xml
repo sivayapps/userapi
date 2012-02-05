@@ -2,10 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!-- including version number in schema location xsd path causing xsd to 
+		be tied to specific spring version and when we upgrade spring we need to 
+		modify schema uri to reflect the new version, but as per spring team, we 
+		can use uri's like spring-context.xsd (instead of spring-context-3.1.xsd), 
+		xsd will be picked from current available jars, so based on jar version (spring 
+		version) the referenced XSD will change, following this easy approach. -->
+		
+		
+
+	<!-- By default, Spring will not aware of the @PostConstruct and @PreDestroy 
+		annotation. To enable it, you have to either register ‘CommonAnnotationBeanPostProcessor‘ 
+		or specify the <context:annotation-config /> -->
+	<context:annotation-config />
 
 	<bean id="dozerBeanMapperFactory" class="org.dozer.spring.DozerBeanMapperFactoryBean">
 		<property name="mappingFiles" value="classpath*:conf/dozer/*dozer-mapping.xml" />
@@ -13,6 +25,12 @@
 
 	<bean id="dozerBeanMapperUtil" class="com.boshanam.user.core.mapping.util.DozerMappingUtil">
 		<constructor-arg ref="dozerBeanMapperFactory"></constructor-arg>
+	</bean>
+
+
+	<!-- Jackson mapping config to set global date format -->
+	<bean id="jacksonObjectMapper"
+		class="com.boshanam.user.core.mapping.json.CustomJsonObjectMapper">
 	</bean>
 
 </beans>

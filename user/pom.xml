@@ -73,7 +73,7 @@
 		<user-core-classic-impl.version>${project.version}</user-core-classic-impl.version>
 		<user-core-google-impl.version>${project.version}</user-core-google-impl.version>
 
-		<spring.version>3.0.6.RELEASE</spring.version>
+		<spring.version>3.1.0.RELEASE</spring.version>
 		<jackson-mapper-asl.version>1.9.1</jackson-mapper-asl.version>
 		<dozer.version>5.3.2</dozer.version>
 		<joda-time.version>1.6.2</joda-time.version>

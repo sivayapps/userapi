@@ -1,4 +1,4 @@
-package com.boshanam.user.ui.core.controllers.rest;
+package com.boshanam.user.autowired.ui.core.controllers.rest;
 
 import java.util.List;
 
