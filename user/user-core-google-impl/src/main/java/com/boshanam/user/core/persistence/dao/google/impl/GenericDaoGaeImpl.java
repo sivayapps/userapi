@@ -9,7 +9,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +75,7 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	@PersistenceContext
 	protected EntityManager entityManager;
 
+	@PersistenceUnit
 	protected EntityManagerFactory entityManagerFactory;
 
 	protected Class<T> persistentClass;
@@ -294,11 +297,22 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 **/
 	@Override
 	public ID removeId(ID id) {
+		EntityManager em = createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		sLogger.debug("Begining Transaction: {}", tx);
+		tx.begin();
+
 		T _t = null;
 		if (id != null) {
-			_t = this.findById(id);
-			this.remove(_t);
+			_t = em.find(this.persistentClass, id);
+			if (_t != null) {
+				em.remove(em.merge(_t));
+			}
+			// this.remove(_t);
 		}
+		sLogger.debug("Committing Transaction...");
+		tx.commit();
+		sLogger.debug("Committed Transaction...");
 		// remove the id
 		return (_t != null) ? id : null;
 	}
