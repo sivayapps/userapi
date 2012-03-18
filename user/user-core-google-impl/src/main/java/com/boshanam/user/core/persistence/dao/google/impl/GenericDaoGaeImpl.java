@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,6 +132,16 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	@Override
 	public T findById(ID id) {
 		return this.getEntityManager().find(this.persistentClass, id);
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findById(List<ID> ids) {
+		
+		Query q = this.getEntityManager().createQuery("select from " + this.persistentClass.getName() + " where id = :ids");
+    q.setParameter("ids", ids);
+    return q.getResultList();
 	}
 
 	/*

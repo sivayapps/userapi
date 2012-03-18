@@ -4,15 +4,15 @@
 package com.boshanam.user.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.boshanam.user.core.dto.PersonDto;
+import com.boshanam.user.core.mapping.util.DozerMappingUtil;
+import com.boshanam.user.core.model.entities.Person;
+import com.boshanam.user.core.persistence.dao.IPersonDao;
 
 /**
  * @author Siva
@@ -24,10 +24,10 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 
 	private static Logger sLogger = LoggerFactory.getLogger(PersonServiceImpl.class);
 
-	private Map<Long, PersonDto> persons;
+	private IPersonDao<Person> personDao;
+	private DozerMappingUtil dozerMappingUtil;
 
 	public PersonServiceImpl() {
-		persons = Collections.synchronizedMap(new HashMap<Long, PersonDto>());
 	}
 
 	/*
@@ -36,16 +36,17 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	 * @see com.boshanam.user.core.service.IPersonService#getAllPersons()
 	 */
 	public List<PersonDto> getAllPersons() {
-		if (persons.size() > 0) {
-			return new ArrayList<PersonDto>(persons.values());
+		List<Person> persons = personDao.findAll();
+		List<PersonDto> personDtoList = new ArrayList<PersonDto>();
+		if (persons != null && persons.size() > 0) {
+			for (Person u : persons) {
+				PersonDto dto = new PersonDto();
+				dto.setId(u.getId());
+				dto.setName(u.getName());
+				personDtoList.add(dto);
+			}
 		}
-		// Return a list of PersonDto objects
-		PersonDto p = new PersonDto();
-		p.setId((long) persons.size());
-		p.setName("OmSriSairam");
-		persons.put(p.getId(), p);
-		sLogger.debug("#############################  Got it ************** ##################");
-		return new ArrayList<PersonDto>(persons.values());
+		return personDtoList;
 	}
 
 	/*
@@ -55,13 +56,12 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	 */
 	public PersonDto createPerson() {
 		// This should create a new person with a new primary key
-		PersonDto p = new PersonDto();
-		p.setId((long) (persons.size() + 1));
-		sLogger.debug("########## Created PersonDto: " + p);
-		persons.put(p.getId(), p);
-		sLogger.debug("########## After ADD(add new PersonDto), Persons List: " + persons);
-		sLogger.debug("########## Returning PersonDto: " + p);
-		return p;
+		Person p = new Person();
+		personDao.create(p);
+		PersonDto dto = new PersonDto();
+		dto.setId(p.getId());
+		dto.setName(p.getName());
+		return dto;
 	}
 
 	/*
@@ -76,33 +76,69 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 		// being updated populated + the primary key.
 		// The method should return a full object with the same primary key.
 		sLogger.debug("########## Trying to find Updating Persons: " + personData);
-		PersonDto p = persons.get(personData.getId());
+		Person p = personDao.findById(personData.getId());
 		if (p != null) {
 			sLogger.debug("########## Found PersonDto to Update: " + p);
-			sLogger.debug("########## Before Update Persons List: " + persons);
 			// persons.put(person.getId(),person);
-			if (personData.getName() != null) {
-				p.setName(personData.getName());
-			}
+			p.setName(personData.getName());
+			personDao.update(p);
 			sLogger.debug("########## Updated PersonDto: " + personData);
-			sLogger.debug("########## After Update Persons List: " + persons);
 		} else {
-			sLogger.debug("########## PersonDto not found to Update");
+			sLogger.debug("########## PersonDto not found to Update, creating now");
+			p = dtoToPerson(personData);
+			personDao.persist(p);
 		}
-		return p;
+		return personData;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.boshanam.user.core.service.IPersonService#deletePerson(java.lang.
+	 * @see com.boshanam.user.core.service.IPersonService#deletePerson(java.lang.
 	 * Long)
 	 */
 	public PersonDto deletePerson(Long id) {
-		PersonDto p = new PersonDto();
-		p.setId(id);
-		return persons.remove(p.getId());
+		PersonDto dto = personToDto(personDao.findById(id));
+		if (dto != null) {
+			personDao.removeId(id);
+		}
+		return dto;
+	}
+
+	public IPersonDao<Person> getPersonDao() {
+		return personDao;
+	}
+
+	public void setPersonDao(IPersonDao<Person> personDao) {
+		this.personDao = personDao;
+	}
+
+	public Person dtoToPerson(PersonDto dto) {
+		Person p = new Person();
+		p.setId(dto.getId());
+		p.setName(dto.getName());
+		return p;
+	}
+
+	public PersonDto personToDto(Person p) {
+		PersonDto dto = new PersonDto();
+		dto.setId(p.getId());
+		dto.setName(p.getName());
+		return dto;
+	}
+
+	/**
+	 * @return the dozerMappingUtil
+	 */
+	public DozerMappingUtil getDozerMappingUtil() {
+		return dozerMappingUtil;
+	}
+
+	/**
+	 * @param dozerMappingUtil the dozerMappingUtil to set
+	 */
+	public void setDozerMappingUtil(DozerMappingUtil dozerMappingUtil) {
+		this.dozerMappingUtil = dozerMappingUtil;
 	}
 
 }

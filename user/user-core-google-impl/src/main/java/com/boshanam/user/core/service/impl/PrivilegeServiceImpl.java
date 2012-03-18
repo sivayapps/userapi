@@ -5,6 +5,7 @@ package com.boshanam.user.core.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import com.boshanam.user.core.dto.PrivilegeDto;
 import com.boshanam.user.core.mapping.util.DozerMappingUtil;
 import com.boshanam.user.core.model.entities.Privilege;
 import com.boshanam.user.core.persistence.dao.IPrivilegeDao;
+import com.boshanam.user.core.util.DateUtil;
 
 /**
  * @author Siva
@@ -66,6 +68,13 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 		// This should create a new person with a new primary key
 		Privilege p = new Privilege();
 		p.setImpact(Impact.Medium);
+		p.setLastModifiedDate(new Date());
+		p.setCreationDate(new Date());
+
+		// Default expiration date as 1 year
+		// TODO need this to be User configurable through some application
+		// configuration UI interface
+		p.setExpiryDate(DateUtil.plusYears(new Date(), 1));
 		privilegeDao.create(p);
 
 		return getDozerMappingUtil().map(p, PrivilegeDto.class);

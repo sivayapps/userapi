@@ -30,6 +30,15 @@ public interface IGenericDao<T, ID extends Serializable> {
 	 * @return T
 	 */
 	T findById(ID id);
+	
+	/**
+	 * 
+	 * findById's
+	 * 
+	 * @param id
+	 * @return T
+	 */
+	List<T> findById(List<ID> ids);
 
 	/**
 	 * findById

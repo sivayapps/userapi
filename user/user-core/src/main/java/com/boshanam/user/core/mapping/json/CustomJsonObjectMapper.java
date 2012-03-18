@@ -4,6 +4,7 @@
 package com.boshanam.user.core.mapping.json;
 
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
@@ -24,6 +25,9 @@ public class CustomJsonObjectMapper extends ObjectMapper {
 
 	public CustomJsonObjectMapper() {
 		sLogger.info("*** Initializing CustomJsonObjectMapper ***");
+
+		// All Date handling in Server should be based on UTC
+		TimeZone.setDefault(TimeZone.getTimeZone(GlobalConstants.APPLICATION_TIME_ZONE_JDK_FORMAT));
 
 		configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
 
