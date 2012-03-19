@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
@@ -133,15 +132,14 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	public T findById(ID id) {
 		return this.getEntityManager().find(this.persistentClass, id);
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findById(List<ID> ids) {
-		
+
 		Query q = this.getEntityManager().createQuery("select from " + this.persistentClass.getName() + " where id = :ids");
-    q.setParameter("ids", ids);
-    return q.getResultList();
+		q.setParameter("ids", ids);
+		return q.getResultList();
 	}
 
 	/*
@@ -221,7 +219,10 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	public T create(T entity) {
 		sLogger.debug("###########  DAO create() ##################");
 		this.getEntityManager().persist(entity);
+		this.getEntityManager().flush();
 		sLogger.debug("###########  DAO create() Person Entity created and persisted : " + entity);
+		// check if ID available
+		sLogger.debug("GENERATED ID: ", entity.getId());
 		return entity;
 	}
 
@@ -308,12 +309,11 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 	 **/
 	@Override
 	public ID removeId(ID id) {
-		EntityManager em = createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		sLogger.debug("Begining Transaction: {}", tx);
-		tx.begin();
+		EntityManager em = this.getEntityManager();
+		sLogger.debug("Using Entity Manager: {}", em);
 
 		T _t = null;
+
 		if (id != null) {
 			_t = em.find(this.persistentClass, id);
 			if (_t != null) {
@@ -321,9 +321,6 @@ public class GenericDaoGaeImpl<T extends IDomainObject<ID>, ID extends Serializa
 			}
 			// this.remove(_t);
 		}
-		sLogger.debug("Committing Transaction...");
-		tx.commit();
-		sLogger.debug("Committed Transaction...");
 		// remove the id
 		return (_t != null) ? id : null;
 	}

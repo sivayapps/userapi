@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.boshanam.user.core.dto.PersonDto;
 import com.boshanam.user.core.mapping.util.DozerMappingUtil;
@@ -20,6 +22,7 @@ import com.boshanam.user.core.persistence.dao.IPersonDao;
  * @Date Jan 4, 2012 1:08:05 PM
  * 
  */
+@Transactional(propagation = Propagation.REQUIRED)
 public class PersonServiceImpl implements com.boshanam.user.core.service.IPersonService {
 
 	private static Logger sLogger = LoggerFactory.getLogger(PersonServiceImpl.class);
@@ -135,7 +138,8 @@ public class PersonServiceImpl implements com.boshanam.user.core.service.IPerson
 	}
 
 	/**
-	 * @param dozerMappingUtil the dozerMappingUtil to set
+	 * @param dozerMappingUtil
+	 *          the dozerMappingUtil to set
 	 */
 	public void setDozerMappingUtil(DozerMappingUtil dozerMappingUtil) {
 		this.dozerMappingUtil = dozerMappingUtil;

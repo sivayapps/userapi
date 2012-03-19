@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.boshanam.user.core.dto.Impact;
 import com.boshanam.user.core.dto.PrivilegeDto;
@@ -24,6 +26,7 @@ import com.boshanam.user.core.util.DateUtil;
  * @Date Jan 4, 2012 1:08:05 PM
  * 
  */
+@Transactional(propagation = Propagation.REQUIRED)
 public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPrivilegeService {
 
 	private static Logger sLogger = LoggerFactory.getLogger(PrivilegeServiceImpl.class);
@@ -76,7 +79,7 @@ public class PrivilegeServiceImpl implements com.boshanam.user.core.service.IPri
 		// configuration UI interface
 		p.setExpiryDate(DateUtil.plusYears(new Date(), 1));
 		privilegeDao.create(p);
-
+		sLogger.debug("GENERATED ID: {}", p.getId());
 		return getDozerMappingUtil().map(p, PrivilegeDto.class);
 	}
 
