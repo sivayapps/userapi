@@ -20,6 +20,10 @@
 		<level value="debug" />
 	</logger>
 
+	<logger name="org.springframework">
+		<level value="debug" />
+	</logger>
+
 	<logger name="org.springframework.beans">
 		<level value="debug" />
 	</logger>
