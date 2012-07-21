@@ -1,0 +1,90 @@
+INFO]  at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1157)
+ERROR] 2012-01-30 18:46:34.703:WARN::/rest/privilege/
+ERROR] org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'privilegeDto' on field 'creationDate': rejected value [Tue Jan 10 12:00:00 IST 2012]; codes [typ
+Mismatch.privilegeDto.creationDate,typeMismatch.creationDate,typeMismatch.java.util.Date,typeMismatch]; arguments [org.
+pringframework.context.support.DefaultMessageSourceResolvable: codes [privilegeDto.creationDate,creationDate]; argument
+ []; default message [creationDate]]; default message [Failed to convert property value of type 'java.lang.String' to r
+quired type 'java.util.Date' for property 'creationDate'; nested exception is org.springframework.core.convert.Conversi
+nFailedException: Unable to convert value "Tue Jan 10 12:00:00 IST 2012" from type 'java.lang.String' to type 'java.uti
+.Date'; nested exception is java.lang.IllegalArgumentException: Invalid format: "Tue Jan 10 12:00:00 IST 2012" is malfo
+med at "IST 2012"]
+ERROR]         at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.doBind(HandlerMethodInvoker.java
+810)
+ERROR]         at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.resolveHandlerArguments(HandlerM
+thodInvoker.java:359)
+ERROR]         at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMetho
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+on: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+[INFO] Field error in object 'privilegeDto' on field 'creationDate': rejected value [Wed Jan 18 12:00:00  0530 2012]; co
+des [typeMismatch.privilegeDto.creationDate,typeMismatch.creationDate,typeMismatch.java.util.Date,typeMismatch]; argumen
+ts [org.springframework.context.support.DefaultMessageSourceResolvable: codes [privilegeDto.creationDate,creationDate];
+arguments []; default message [creationDate]]; default message [Failed to convert property value of type 'java.lang.Stri
+ng' to required type 'java.util.Date' for property 'creationDate'; nested exception is org.springframework.core.convert.
+ConversionFailedException: Unable to convert value "Wed Jan 18 12:00:00  0530 2012" from type 'java.lang.String' to type
+ 'java.util.Date'; nested exception is java.lang.IllegalArgumentException: Invalid format: "Wed Jan 18 12:00:00  0530 20
+12" is malformed at " 2012"]
+[INFO] DEBUG: org.springframework.web.servlet.DispatcherServlet - Could not complete request
+[INFO] org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+[INFO] Field error in object 'privilegeDto' on field 'creationDate': rejected value 
+
+[Wed Jan 18 12:00:00  0530 2012];
+
+ co
+des [typeMismatch.privilegeDto.creationDate,typeMismatch.creationDate,typeMismatch.java.util.Date,typeMismatch]; argumen
+ts [org.springframework.context.support.DefaultMessageSourceResolvable: codes [privilegeDto.creationDate,creationDate];
+arguments []; default message [creationDate]]; default message [Failed to convert property value of type 'java.lang.Stri
+ng' to required type 'java.util.Date' for property 'creationDate'; nested exception is org.springframework.core.convert.
+ConversionFailedException: Unable to convert value "Wed Jan 18 12:00:00  0530 2012" from type 'java.lang.String' to type
+ 'java.util.Date'; nested exception is java.lang.IllegalArgumentException: Invalid format: "Wed Jan 18 12:00:00  0530 20
+12" is malformed at " 2012"]
+[INFO]  at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.doBind(HandlerMethodInvoker.java:810)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[ERROR] 2012-01-30 20:10:57.046:WARN::/rest/privilege/
+[ERROR] org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+|Field error in object 'privilegeDto' on field 'creationDate': rejected value [20120118120000 0530]; codes [typeMismatch
+.privilegeDto.creationDate,typeMismatch.creationDate,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springfra
+mework.context.support.DefaultMessageSourceResolvable: codes [privilegeDto.creationDate,creationDate]; arguments []; def
+ault message [creationDate]]; default message [Failed to convert property value of type 'java.lang.String' to required t
+ype 'java.util.Date' for property 'creationDate'; nested exception is org.springframework.core.convert.ConversionFailedE
+xception: Unable to convert value "20120118120000 0530" from type 'java.lang.String' to type 'java.util.Date'; nested ex
+ception is java.lang.IllegalArgumentException: Invalid format: "20120118120000 0530" is malformed at " 0530"]
+[INFO]  at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:790)
+[INFO]  at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:719)
+[INFO]  at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:669)
+[INFO]  at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:596)
+[INFO]  at javax.servlet.http.HttpServlet.service(HttpServlet.java:640)
+[INFO]  at javax.servlet.http.HttpServlet.service(HttpServlet.java:717)

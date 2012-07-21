@@ -2,50 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.boshanam</groupId>
-	<artifactId>user</artifactId>
+	<artifactId>gae-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>UserManager</name>
-	<description>Maintaining Administering Users</description>
-	<profiles>
-		<profile>
-			<id>classic</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>user-core</module>
-				<module>user-ui-core</module>
-				<module>user-ui</module>
-				<module>user-core-classic-impl</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>google</id>
-			<modules>
-				<module>user-core</module>
-				<module>user-ui-core</module>
-				<module>user-ui</module>
-				<module>user-core-google-impl</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>quick</id>
-			<modules>
-				<module>user-core</module>
-				<module>user-ui-core</module>
-				<module>user-core-classic-impl</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>googleQ</id>
-			<modules>
-				<module>user-core</module>
-				<module>user-ui-core</module>
-				<module>user-core-google-impl</module>
-			</modules>
-		</profile>
-	</profiles>
+	<packaging>war</packaging>
+	<name>DevHelpelperGoogleApp</description>
 
 	<developers>
 		<developer>
@@ -84,8 +44,8 @@
 		<gwt.version>2.4.0</gwt.version>
 		<smartgwt.version>3.0</smartgwt.version>
 
-		<gae.version>1.6.3</gae.version>
-		<gae.application.version>ac152a43</gae.application.version>
+		<gae.version>1.6.1</gae.version>
+		<gae.application.version>r18</gae.application.version>
 		<maven-gae-plugin.version>0.9.2</maven-gae-plugin.version>
 
 		<!-- GWT needs at least java 1.5 -->
@@ -262,11 +222,8 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>${hsqldb.version}</version>
+			<scope>test</scope>
 		</dependency>
-	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
 
 			<!-- GWT and smart GWT dependencies -->
 			<dependency>
@@ -303,7 +260,7 @@
 				<scope>compile</scope>
 			</dependency>
 
-		</dependencies>
-	</dependencyManagement>
+	</dependencies>
+
 
 </project>

@@ -1,0 +1,40 @@
+I'm trying with a simple application to introduce SpringFramework (3.1.0) and it's transaction management but it seems to be (almost?) impossible. The application uses JPA but applying the JpaTransactionManager does not produce any result.
+
+This is the persistence.xml:
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+         version="1.0">
+<persistence-unit name="transactions-optional">
+    <provider>org.datanucleus.store.appengine.jpa.DatastorePersistenceProvider</provider>
+    <properties>
+        <property name="datanucleus.NontransactionalRead" value="true"/>
+        <property name="datanucleus.NontransactionalWrite" value="true"/>
+        <property name="datanucleus.ConnectionURL" value="appengine"/>
+    </properties>
+</persistence-unit>
+</persistence>
+
+and this is the transaction-related part of applicationContext.xml:
+
+<bean id="entityManagerFactory"
+    class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"
+    lazy-init="true">
+    <property name="persistenceUnitName" value="transactions-optional" />
+</bean>
+<bean name="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory" />
+</bean>
+
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
+        <tx:method name="get*" read-only="true" />
+        <tx:method name="*" />
+    </tx:attributes>
+</tx:advice>
+
+<aop:config>
+    <aop:pointcut id="fooServiceOperation"
+        expression="execution(* com.elogiclab.pcf.service.TestService.*(..))" />
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceOperation" />
+</aop:config>
