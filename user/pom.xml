@@ -9,19 +9,32 @@
 	<description>Maintaining Administering Users</description>
 	<profiles>
 		<profile>
-			<id>classic</id>
+			<id>all</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
 				<module>user-core</module>
 				<module>user-ui-core</module>
-				<module>user-ui</module>
 				<module>user-core-classic-impl</module>
+				<module>user-core-google-impl</module>
+				<module>user-ui</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>classic</id>						
+			<modules>
+				<module>user-core</module>
+				<module>user-ui-core</module>
+				<module>user-core-classic-impl</module>
+				<module>user-ui</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>google</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<modules>
 				<module>user-core</module>
 				<module>user-ui-core</module>
