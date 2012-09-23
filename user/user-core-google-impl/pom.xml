@@ -16,7 +16,7 @@
 	<description>Core functionality required for User Management such as Services, Dao's implementation optimized for Google Datastore and Services with JPA etc.</description>
 
 	<properties>
-		<datanucleus-appengine.version>2.0.0-RC2</datanucleus-appengine.version>
+		<datanucleus-appengine.version>2.0.0</datanucleus-appengine.version>
 		<datanucleus-core.version>3.0.5</datanucleus-core.version>
 		<datanucleus-api-jpa.version>3.0.5</datanucleus-api-jpa.version>
 		<geronimo-jpa.version>1.0</geronimo-jpa.version>
